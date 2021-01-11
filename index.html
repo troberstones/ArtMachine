@@ -1,37 +1,47 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        /* Disable intrinsic user agent touch behaviors (such as panning or zooming) so
-    that all events on the canvas element are given to the application instead. */
-
-        canvas {
+<!-- Load the Paper.js library -->
+<script type="text/javascript" src="js/paper.js"></script>
+<!-- Load external PaperScript and associate it with myCanvas -->
+<!-- <script type="text/paperscript" src="js/myScript.js" canvas="myCanvas">
+-->
+<script type="text/javascript" src="js/jsPaper.js"></script>
+</script>
+<script type="text/javascript" src="js/ui.js"></script>
+<script type="text/javascript" src="js/palette.js"></script>
+</head>
+<style>
+    html,
+body {
+    height: 100%;
+}
+canvas {
             touch-action: none;
             -webkit-user-select: none;
             user-select: none
         }
 
-        #pickedColor {
-            position: absolute;
-        }
-
-        .sizeContainer {
-            display: flex;
-            flex-direction: row;
-        }
-    </style>
-    <script type="text/javascript" src="dist/paper-full.js"></script>
-    <script type="text/javascript" src="engine.js"></script>
-</head>
-
-
-
-<body onload="init()" bgcolor="grey">
-    <canvas name="drawing" id="drawingCanvas" width="500" height="500" style="border:1px solid black;"></canvas>
-    <canvas name="palette" id="palette" width="200" height="500" style="border:0px solid black;"></canvas>
+/* Scale canvas with resize attribute to full size */
+body {
+    background-color:grey;
+}
+</style>
+<div hidden="true">canvas[resize] {
+    width: 600px;
+    height: 600px;
+}
+canvas[palette] {
+    width: 100px;
+    height: 300px;
+    border: 1px;
+    border-color: black;
+}</div>
+<!--<body onload="init();canvasInit()">
+-->
+<body>
+    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
+    <canvas id="palette" width = "100" height = "600" palette style="border: 1px solid black"></canvas>
     <div class="sizeContainer">
         <div id="brushSizeIndicator">50</div>
         <input type="range" min="1" max="100" value="50" class="slider" id="brushSize">
@@ -59,10 +69,11 @@
         <label for="picker">Bezier</label>
         <input type="radio" name="mode" id="line" value="line">
         <label for="picker">Line</label>
+        <input type="radio" name="mode" id="circle" value="circle">
+        <label for="picker">circle</label>
     </div>
-
-
-
+    <div>
+        <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last Color</label>
+    </div>
 </body>
-
 </html>
