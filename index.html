@@ -1,0 +1,68 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Disable intrinsic user agent touch behaviors (such as panning or zooming) so
+    that all events on the canvas element are given to the application instead. */
+
+        canvas {
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none
+        }
+
+        #pickedColor {
+            position: absolute;
+        }
+
+        .sizeContainer {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+    <script type="text/javascript" src="dist/paper-full.js"></script>
+    <script type="text/javascript" src="engine.js"></script>
+</head>
+
+
+
+<body onload="init()" bgcolor="grey">
+    <canvas name="drawing" id="drawingCanvas" width="500" height="500" style="border:1px solid black;"></canvas>
+    <canvas name="palette" id="palette" width="200" height="500" style="border:0px solid black;"></canvas>
+    <div class="sizeContainer">
+        <div id="brushSizeIndicator">50</div>
+        <input type="range" min="1" max="100" value="50" class="slider" id="brushSize">
+    </div>
+    <div id="datareadout">0.05135370045900345 488 276</div>
+    <div id="datareadoutcolor"></div>
+    <div id="pickedColor">O</div>
+    <button id="saveButton">Save</button>
+    <button id="loadButton">Load</button>
+    <input type="file" id="fileElem" multiple="" accept="image/*" style="display:none">
+    <a href="#" id="fileSelect">Select some files</a>
+    <div id="fileList">
+        <p>No files selected!</p>
+    </div>
+    <div id="modeList">
+        <input type="radio" name="mode" id="polyfill" value="polyfill"*>
+        <label for="polyfill">PolyFill</label>
+        <input type="radio" name="mode" id="brush" value="brush">
+        <label for="brush">Brush</label>
+        <input type="radio" name="mode" id="picker" value="picker">
+        <label for="picker">Picker</label>
+        <input type="radio" name="mode" id="polygon" value="polygon">
+        <label for="picker">Polygon</label>
+        <input type="radio" name="mode" id="bezier" value="bezier">
+        <label for="picker">Bezier</label>
+        <input type="radio" name="mode" id="line" value="line">
+        <label for="picker">Line</label>
+    </div>
+
+
+
+</body>
+
+</html>
