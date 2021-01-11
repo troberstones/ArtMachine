@@ -151,8 +151,11 @@ function filledShape(event) {
         case "pointerdown":
             var pos = getCursorPosition(event);
             currentFilledShape = new paper.Path();
-            currentFilledShape.stroke = false;
-            //currentFilledShape.strokeColor = 'black';
+            if (strokeFilledPoly) {
+                currentFilledShape.stroke = strokeFilledPoly;
+                console.log("strokefilledPoly:" + strokeFilledPoly)
+                currentFilledShape.strokeColor = 'black';
+            }
             currentFilledShape.closed = true;
             currentFilledShape.add(new paper.Point(pos.x, pos.y));
             currentFilledShape.fillColor = fillColor;

@@ -3,7 +3,7 @@ function uiInit() {
 }
 var mode = "polyfill";
 var adjustLastColor = false;
-
+var strokeFilledPoly = false;
 function setupButton() {
     saveButton = document.getElementById('saveButton')
     saveButton.onclick = function () {
@@ -28,6 +28,13 @@ function setupButton() {
     adjustCB = document.getElementById("adjustLastColor");
     adjustCB.addEventListener('change', function() {
         adjustLastColor = this.checked;
+        //if (this.checked) {
+      });
+       // Asjust last color
+    strokePolyCB= document.getElementById("strokeFilledPoly");
+    strokePolyCB.addEventListener('change', function() {
+        strokeFilledPoly = this.checked;
+        console.log("FPCB:"+this.checked);
         //if (this.checked) {
       });
 
