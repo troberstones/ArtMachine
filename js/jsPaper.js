@@ -87,7 +87,7 @@ function pointermove(event) {
             filledShape(event);
             break;
         case "picker":
-            clickHandler(event)
+            //clickHandler(event)
             break;
         case "line":
             line(event)
@@ -99,6 +99,21 @@ function pointermove(event) {
             break;
     }
 }
+
+function clickHandler(e) {
+    console.log("clicked!");
+    if (mode == "picker") {
+        setColor(e, false);
+        revertMode();
+    } else if (mode == "polygon") {
+        console.log("polygon");
+        polygon(e);
+    } else if (mode == "bezier") {
+        console.log("bezier");
+        bezier(e);
+    }
+}
+
 function colorChanged() {
     //Hi there1
     if (adjustLastColor == true) {

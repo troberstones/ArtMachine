@@ -40,12 +40,14 @@ function setupPalette() {
     palCtx = palCanvas.getContext("2d");
     drawPalette();
     palCanvas.addEventListener("click", function (e) {
-        setColor(e, palCtx, true)
+        setColor(e, true)
     }
     );
     //canvas.addEventListener("click", clickHandler);
 }
-function setColor(event, canvContext, moveIndicator) {
+function setColor(event, moveIndicator) {
+    canv = event.target
+    canvContext = canv.getContext("2d");
     console.log(fillColor);
     //test = event.target;
     clickPos = getCursorPosition(event);
