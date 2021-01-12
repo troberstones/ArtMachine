@@ -13,6 +13,8 @@ var touchDownPoint = point;
 var touchUpPoint = point;
 var palCanvas;
 var palCtx;
+var palCanvOverlay;
+var palCtxOverlay;
 
 function getCursorPosition(event) {
     canv = event.target
@@ -43,6 +45,11 @@ function setupPalette() {
         setColor(e, true)
     }
     );
+    
+    palCanvOverlay = document.getElementById("paletteOverlay");
+    palCtxOverlay = palCanvOverlay.getContext("2d");
+
+
     //canvas.addEventListener("click", clickHandler);
 }
 function setColor(event, moveIndicator) {
@@ -56,6 +63,9 @@ function setColor(event, moveIndicator) {
     //ctx.fillColor = clickColor;
     datareadoutcolor.innerText = fillColor;
     //testPalette(event);
+    iw = 4; // indicator width
+    palCtxOverlay.strokeRect(clickPos.x-iw,clickPos.y-iw,iw,iw);
+    palCtxOverlay.fillColor = "black";
     colorChanged();
     //ctx.fillRect(10,10,20,20);
     //if (moveIndicator)

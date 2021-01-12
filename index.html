@@ -26,8 +26,10 @@ canvas {
 body {
     background-color:grey;
 }
+
 </style>
-<div hidden="true">canvas[resize] {
+<div hidden="true">
+    canvas[resize] {
     width: 600px;
     height: 600px;
 }
@@ -36,12 +38,20 @@ canvas[palette] {
     height: 300px;
     border: 1px;
     border-color: black;
+}
+    #paletteOverlay {
+        position: relative;
+        right:150px
+    }
 }</div>
 <!--<body onload="init();canvasInit()">
 -->
 <body>
     <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
-    <canvas id="palette" width = "100" height = "600" palette style="border: 1px solid black"></canvas>
+    
+        <canvas id="palette" width = "200" height = "600" palette style="position: absolute; z-index: 0; border: 1px solid black"></canvas>
+        <canvas id="paletteOverlay" width = "200" height = 600 style="position: absolute; z-index: 1; pointer-events: none; "></canvas>
+  
     <div class="sizeContainer">
         <div id="brushSizeIndicator">50</div>
         <input type="range" min="1" max="100" value="50" class="slider" id="brushSize">
