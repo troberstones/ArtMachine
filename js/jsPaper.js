@@ -138,6 +138,7 @@ function drawCircle(event) {
             var pos = getCursorPosition(event);
             currentCircle = new paper.Path.Circle(new paper.Point(pos.x, pos.y), 50);
             currentCircle.fillColor = fillColor;
+            currentCircle.blendMode = blendMode;
             break;
         default:
             console.log("circle called for " + event.type);
@@ -174,6 +175,8 @@ function filledShape(event) {
             currentFilledShape.closed = true;
             currentFilledShape.add(new paper.Point(pos.x, pos.y));
             currentFilledShape.fillColor = fillColor;
+            currentFilledShape.blendMode = blendMode;
+
             //currentFilledShape.selected = true;
             break;
         default:

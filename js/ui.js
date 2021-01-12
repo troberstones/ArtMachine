@@ -1,9 +1,12 @@
 function uiInit() {
     setupButton();
+    setupBlendModesList();
 }
 var mode = "polyfill";
 var adjustLastColor = false;
 var strokeFilledPoly = false;
+var blendMode = "normal";
+
 function setupButton() {
     saveButton = document.getElementById('saveButton')
     saveButton.onclick = function () {
@@ -116,6 +119,20 @@ function setupBlendModesList() {
     item = document.getElementById("compositeMode");
     let blendmodes = ['normal', 'multiply', 'screen', 'overlay', 'soft-light', 'hard- light', 'color-dodge', 'color-burn', 'darken', 'lighten', 'difference', 'exclusion', 'hue', 'saturation', 'luminosity', 'color', 'add', 'subtract', 'average', 'pin-light', 'negation', 'source-over', 'source-in', 'source-out', 'source-atop', 'destination-over', 'destination-in', 'destination-out', 'destination-atop', 'lighter', 'darker', 'copy', 'xor'];
     // Add code to add the list to the div
+    selectObject = document.createElement("select");
+    selectObject.addEventListener("change",function(e) {
+        blendMode = this.value;
+        console.log("BlendMode:"+blendMode);
+    });
+    item.appendChild(selectObject);
+    blendmodes.forEach(x => {
+        newChild = document.createElement("option");
+        newChild.setAttribute("value",x);
+        newChild.innerHTML = x;
+        selectObject.appendChild(newChild);
+    });
+    //newChild = document.createElement("option", "value","test");
+    //item.appendChild(newChild);
 
     
 }
