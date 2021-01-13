@@ -1,4 +1,5 @@
 var fillColor;
+var oldFillColor;
 var itLooksGood;
 function paletteInit() {
     console.log("this is a test!");
@@ -15,6 +16,8 @@ var palCanvas;
 var palCtx;
 var palCanvOverlay;
 var palCtxOverlay;
+var palColorSwatches;
+var palColorSwatchesCtx;
 
 function getCursorPosition(event) {
     canv = event.target
@@ -49,8 +52,16 @@ function setupPalette() {
     palCanvOverlay = document.getElementById("paletteOverlay");
     palCtxOverlay = palCanvOverlay.getContext("2d");
 
+     palColorSwatches = document.getElementById("displayColors");
+     palColorSwatchesCtx = palColorSwatches.getContext("2d");
 
     //canvas.addEventListener("click", clickHandler);
+}
+function drawSwatch(event) {
+    palColorSwatchesCtx.fillStyle = oldFillColor;
+    palColorSwatchesCtx.fillRect(10,100,100,100);
+    palColorSwatchesCtx.fillStyle = fillColor;
+    palColorSwatchesCtx.fillRect(10,10,100,100);
 }
 function setColor(event, moveIndicator) {
     canv = event.target
@@ -59,6 +70,7 @@ function setColor(event, moveIndicator) {
     //test = event.target;
     clickPos = getCursorPosition(event);
     clickColor = canvContext.getImageData(clickPos.x, clickPos.y, 1, 1).data;
+    oldFillColor = fillColor;
     fillColor = 'rgb(' + clickColor + ')';
     //ctx.fillColor = clickColor;
     datareadoutcolor.innerText = fillColor;
@@ -67,6 +79,7 @@ function setColor(event, moveIndicator) {
     palCtxOverlay.strokeRect(clickPos.x-iw,clickPos.y-iw,iw,iw);
     palCtxOverlay.fillColor = "black";
     colorChanged();
+    drawSwatch(event);
     //ctx.fillRect(10,10,20,20);
     //if (moveIndicator)
     //    movePickedColor(event);

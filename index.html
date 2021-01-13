@@ -21,6 +21,9 @@ canvas {
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -webkit-user-drag: none;
+            -webkit-
         }
 
 /* Scale canvas with resize attribute to full size */
@@ -52,11 +55,13 @@ canvas[palette] {
     
         <canvas id="palette" width = "200" height = "600" palette style="position: absolute; z-index: 0; border: 1px solid black"></canvas>
         <canvas id="paletteOverlay" width = "200" height = 600 style="position: absolute; z-index: 1; pointer-events: none; "></canvas>
-  
+        <canvas id="displayColors" width = "100" height = "600" style="position: absolute; right:0;"></canvas>
+
     <div class="sizeContainer">
         <div id="brushSizeIndicator">50</div>
         <input type="range" min="1" max="100" value="50" class="slider" id="brushSize">
     </div>
+
     <div id="datareadout">0.05135370045900345 488 276</div>
     <div id="datareadoutcolor"></div>
     <div id="pickedColor">O</div>
