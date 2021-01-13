@@ -1,0 +1,33 @@
+1 Save
+2 Load
+3 Fix selected color display on ipad
+4 Modify current color
+    shift red
+    shift blue
+    shift green
+    shift hue
+    shift value 
+    shift saturation
+5 Display current color in a large format
+15 pan canvas
+6 Color blender
+7 Color swatches for last used colors
+8 Draw Line
+9 Draw Stroke
+10 draw rect
+11 draw into transparent canvas and on termination of stroke, drop to the real canvas
+12 Add Layer interface
+13 Add Layer support
+14 Resize canvas to fit the screen
+16 Add gamut masking
+17 add alternate palette display
+18 Add selection of shapes
+19 add editing of shape ordering
+20 add moveing of shapes
+21 double tap undo
+21 Edit knots in shape
+22 multi select of shapes
+23 boolean of selected shapes
+24 fill texture 
+25 fill gradient
+
