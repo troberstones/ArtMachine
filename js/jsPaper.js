@@ -21,15 +21,15 @@ function canvasInit() {
         canvas.addEventListener("pointerup", touchup);
     }
     // Create a Paper.js Path to draw a line into it:
-    var path = new paper.Path();
+    //var path = new paper.Path();
     // Give the stroke a color
-    path.strokeColor = 'black';
-    var start = new paper.Point(100, 100);
+    //path.strokeColor = 'black';
+    //var start = new paper.Point(100, 100);
     // Move to start and draw a line from there
-    path.moveTo(start);
+    //path.moveTo(start);
     // Note that the plus operator on Point objects does not work
     // in JavaScript. Instead, we need to call the add() function:
-    path.lineTo(start.add([200, -50]));
+    //path.lineTo(start.add([200, -50]));
     // Draw the view now:
     paper.view.draw();
 }
@@ -154,7 +154,7 @@ function filledShape(event) {
         case "pointermove":
             if (currentFilledShape) {
                 if (event.buttons == 0) {
-                    currentFilledShape.simplify();
+                    currentFilledShape.simplify(10);
                     currentFilledShape = false;
                     paper.view.draw();
                 } else {
@@ -187,3 +187,15 @@ function filledShape(event) {
     //console.log("Event:"+event.type)
 
 }
+
+function downloadDataUri(options) {
+    console.log("download data uri called");
+    
+	if (!options.url)
+		options.url = "http://download-data-uri.appspot.com/";
+	$('<form method="post" action="' + options.url
+		+ '" style="display:none"><input type="hidden" name="filename" value="'
+		+ options.filename + '"/><input type="hidden" name="data" value="'
+		+ options.data + '"/></form>').appendTo('body').submit().remove();
+}
+

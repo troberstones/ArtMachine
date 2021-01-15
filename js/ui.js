@@ -1,6 +1,7 @@
 function uiInit() {
     setupButton();
     setupBlendModesList();
+    setupFileButton();
 }
 var mode = "polyfill";
 var adjustLastColor = false;
@@ -18,6 +19,33 @@ function setupButton() {
         anchor.setAttribute('download', 'image.png');
         anchor.click();
     }
+
+    // export svg
+    let exportButton = document.getElementById('export-button');
+
+    exportButton.addEventListener("click", function() {
+        var svg = paper.project.exportSVG({ asString: true });
+        console.log("Export button pressed");
+        console.log(svg);
+
+        var anchor = document.createElement('a');
+
+        console.log(anchor);
+        var svgData = 'data:image/svg+xml;base64,' + btoa(svg);
+        anchor.setAttribute('href', svgData);
+        anchor.setAttribute('download', 'export.svg');
+        anchor.click();
+
+        
+        //downloadDataUri({
+        //    data: 'data:image/svg+xml;base64,' + btoa(svg),
+        //    filename: 'export.svg'
+        //});
+    });
+
+    // import svg
+    let importSvgButton = document.getElementById('import-button');
+
     modeRadioButton = document.getElementsByName("mode");
     for (var i = 0, max = modeRadioButton.length; i < max; i++) {
         modeRadioButton[i].onclick = function () {
@@ -56,10 +84,11 @@ function setupFileButton() {
     let fileHandle;
     //loadButton = document.getElementById('loadButton')
     const fileSelect = document.getElementById("fileSelect"),
-        fileElem = document.getElementById("fileElem"),
-        fileList = document.getElementById("fileList");
+        fileElem = document.getElementById("fileElem");
+        //fileList = document.getElementById("fileList");
 
     fileSelect.addEventListener("click", function (e) {
+        console.log("test add click");
         if (fileElem) {
             fileElem.click();
         }
@@ -91,6 +120,7 @@ function setupFileButton() {
     // });
 }
 function handleFiles() {
+    console.log("hangle file load");
     if (!this.files.length) {
         fileList.innerHTML = "<p>No files selected!</p>";
     } else {
@@ -103,10 +133,13 @@ function handleFiles() {
 
             const img = document.createElement("img");
             img.src = URL.createObjectURL(this.files[i]);
+            paper.project.importSVG(img.src, function(items, svg) {
+                paper.project.activeLayer.addChild(items);
+            });
             img.height = 60;
             img.onload = function () {
                 URL.revokeObjectURL(this.src);
-                ctx.drawImage(img, 0, 0);
+                //ctx.drawImage(img, 0, 0);
             }
             li.appendChild(img);
             const info = document.createElement("span");
@@ -135,4 +168,21 @@ function setupBlendModesList() {
     //item.appendChild(newChild);
 
     
+}
+
+function convertImageToCanvas(image) {
+    var canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    canvas.getContext("2d").drawImage(image, 0, 0);
+
+    return canvas;
+}
+
+
+// Converts canvas to an image
+function convertCanvasToImage(canvas) {
+    var image = new Image();
+    image.src = canvas.toDataURL("image/png");
+    return image;
 }

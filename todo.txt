@@ -1,5 +1,5 @@
-1 Save
-2 Load
+//1 Save
+//2 Load
 3 //Fix selected color display on ipad
 4 Modify current color
     shift red
