@@ -47,7 +47,7 @@ function setupPalette() {
     palCanvas.addEventListener("click", pickColor);
     palCanvas.addEventListener("pointermove", pickColor);
     palCanvas.addEventListener("pointerup", pickColor);
-    palCanvas.addEventListener("pointerup", pickColor); 
+    palCanvas.addEventListener("pointerdown", pickColor); 
     palCanvas.addEventListener("touchstart", pickColor); 
     palCanvas.addEventListener("mousedown", pickColor); 
 
