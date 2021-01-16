@@ -121,6 +121,11 @@ function colorChanged() {
         paper.view.draw();
     }
 }
+function removeLastItem() {
+    let target = paper.project.activeLayer.lastChild;
+    target.remove();
+    paper.view.draw();
+}
 var currentCircle = false;
 function drawCircle(event) {
     switch (event.type) {

@@ -44,11 +44,13 @@ function setupPalette() {
     palCanvas = document.getElementById("palette");
     palCtx = palCanvas.getContext("2d");
     drawPalette();
-    palCanvas.addEventListener("click", function (e) {
-        setColor(e, true)
-    }
-    );
-    
+    palCanvas.addEventListener("click", pickColor);
+    palCanvas.addEventListener("pointermove", pickColor);
+    palCanvas.addEventListener("pointerup", pickColor);
+    palCanvas.addEventListener("pointerup", pickColor); 
+    palCanvas.addEventListener("touchstart", pickColor); 
+    palCanvas.addEventListener("mousedown", pickColor); 
+
     palCanvOverlay = document.getElementById("paletteOverlay");
     palCtxOverlay = palCanvOverlay.getContext("2d");
 
@@ -57,6 +59,40 @@ function setupPalette() {
 
     //canvas.addEventListener("click", clickHandler);
 }
+
+var pickingColor = false;
+function pickColor(event) {
+    switch (event.type) {
+        case "pointerup":
+                pickingColor = false;
+                setColor(event,true);
+                break;
+        case "pointermove":
+            //console.log("move");
+            if (event.buttons == 0) {
+                pickingColor = false;
+                //setColor(event,true);
+            } 
+            if (pickingColor) {
+                setColor(event,false);
+            }
+            break;
+        case "click":
+            console.log("click");
+                setColor(event,true);
+                break;
+        case "mousedown":
+        case "pointerdown":
+            console.log("pointer down");
+            pickingColor = true;
+                setColor(event,false);
+            break;
+        default:
+            console.log("circle called for " + event.type);
+            break;
+    }
+}
+
 function drawSwatch(event) {
     palColorSwatchesCtx.fillStyle = oldFillColor;
     palColorSwatchesCtx.fillRect(10,100,100,100);
@@ -67,22 +103,23 @@ function setColor(event, moveIndicator) {
     canv = event.target
     canvContext = canv.getContext("2d");
     console.log(fillColor);
-    //test = event.target;
+
     clickPos = getCursorPosition(event);
     clickColor = canvContext.getImageData(clickPos.x, clickPos.y, 1, 1).data;
-    oldFillColor = fillColor;
+    if(moveIndicator) {
+        oldFillColor = fillColor;
+    }
     fillColor = 'rgb(' + clickColor + ')';
     //ctx.fillColor = clickColor;
     datareadoutcolor.innerText = fillColor;
     //testPalette(event);
-    iw = 4; // indicator width
-    palCtxOverlay.strokeRect(clickPos.x-iw,clickPos.y-iw,iw,iw);
-    palCtxOverlay.fillColor = "black";
+    if(moveIndicator) {
+        iw = 4; // indicator width
+        palCtxOverlay.strokeRect(clickPos.x-iw,clickPos.y-iw,iw,iw);
+        palCtxOverlay.fillColor = "black";
+    }
     colorChanged();
     drawSwatch(event);
-    //ctx.fillRect(10,10,20,20);
-    //if (moveIndicator)
-    //    movePickedColor(event);
 }
 function drawPalette() {
     const segmentCount = 50;

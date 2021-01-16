@@ -35,12 +35,6 @@ function setupButton() {
         anchor.setAttribute('href', svgData);
         anchor.setAttribute('download', 'export.svg');
         anchor.click();
-
-        
-        //downloadDataUri({
-        //    data: 'data:image/svg+xml;base64,' + btoa(svg),
-        //    filename: 'export.svg'
-        //});
     });
 
     // import svg
@@ -68,7 +62,12 @@ function setupButton() {
         console.log("FPCB:"+this.checked);
         //if (this.checked) {
       });
+    let undoButton = document.getElementById("undo-button");
+    undoButton.addEventListener("click", undo);
 
+}
+function undo() {
+    removeLastItem();
 }
 function revertMode() {
     mode = previousMode;
@@ -83,7 +82,7 @@ function setMode(value) {
 function setupFileButton() {
     let fileHandle;
     //loadButton = document.getElementById('loadButton')
-    const fileSelect = document.getElementById("fileSelect"),
+    const fileSelect = document.getElementById("loadButton"),
         fileElem = document.getElementById("fileElem");
         //fileList = document.getElementById("fileList");
 
