@@ -36,7 +36,7 @@ function canvasInit() {
 function touchup(event) {
     switch (mode) {
         case "polyfill":
-            if(currentFilledShape) {
+            if (currentFilledShape) {
                 currentFilledShape.simplify();
                 paper.view.draw();
                 currentFilledShape = false;
@@ -52,6 +52,9 @@ function touchdown(event) {
         case "circle":
             drawCircle(event);
             break;
+        case "stroke":
+            line(event, "stroke")
+            break;
         case "polyfill":
             filledShape(event);
             break;
@@ -62,7 +65,7 @@ function touchdown(event) {
             clickHandler(event)
             break;
         case "line":
-            line(event)
+            line(event, "segment");
             break;
         case "bezier":
             bezier(event)
@@ -90,7 +93,10 @@ function pointermove(event) {
             //clickHandler(event)
             break;
         case "line":
-            line(event)
+            line(event, "segment")
+            break;
+        case "stroke":
+            line(event, "stroke")
             break;
         case "bezier":
             bezier(event)
@@ -193,14 +199,70 @@ function filledShape(event) {
 
 }
 
+var currentLine = false;
+var lastpt = false;
+function line(event, linemode) {
+    switch (event.type) {
+        case "pointermove":
+            if (event.buttons == 0) {
+                switch (linemode) {
+                    case "stroke":
+                        if(currentLine) {
+                            currentLine.simplify(10);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                currentLine = false;
+                lastpt = false;
+            }
+            if (currentLine) {
+                var pos = getCursorPosition(event);
+                //currentLine.position = new paper.Point(pos.x, pos.y);
+                //lastpt.set( pos.x,pos.y);
+                switch (linemode) {
+                    case "segment":
+                        currentLine.lastSegment.point.set(pos.x, pos.y);
+                        break;
+                    case "polygon":
+                        break;
+                    case "stroke":
+                        currentLine.add(new paper.Point(pos.x, pos.y));
+                        break;
+                    default:
+                        break;
+                }
+
+                paper.view.draw();
+            }
+            break;
+        case "pointerdown":
+            var pos = getCursorPosition(event);
+            lastpt = new paper.Point(pos.x, pos.y);
+            currentLine = new paper.Path(new paper.Point(pos.x, pos.y), lastpt);
+            let tmpBrushSize = brushSize;
+            if(brushSize < 3) {tmpBrushSise = 3;}
+            currentLine.strokeWidth = tmpBrushSize;
+            //currentLine.strokeWidth = 10;
+            currentLine.strokeColor = fillColor;
+            //currentLine.selected = true;
+            //currentLine.fillColor = fillColor;
+            currentLine.blendMode = blendMode;
+            break;
+        default:
+            console.log("line called for " + event.type);
+            break;
+    }
+}
 function downloadDataUri(options) {
     console.log("download data uri called");
-    
-	if (!options.url)
-		options.url = "http://download-data-uri.appspot.com/";
-	$('<form method="post" action="' + options.url
-		+ '" style="display:none"><input type="hidden" name="filename" value="'
-		+ options.filename + '"/><input type="hidden" name="data" value="'
-		+ options.data + '"/></form>').appendTo('body').submit().remove();
+
+    if (!options.url)
+        options.url = "http://download-data-uri.appspot.com/";
+    $('<form method="post" action="' + options.url
+        + '" style="display:none"><input type="hidden" name="filename" value="'
+        + options.filename + '"/><input type="hidden" name="data" value="'
+        + options.data + '"/></form>').appendTo('body').submit().remove();
 }
 

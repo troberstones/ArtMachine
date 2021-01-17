@@ -7,6 +7,7 @@ var mode = "polyfill";
 var adjustLastColor = false;
 var strokeFilledPoly = false;
 var blendMode = "normal";
+var brushSize = 10;
 
 function setupButton() {
     saveButton = document.getElementById('saveButton')
@@ -65,6 +66,15 @@ function setupButton() {
     let undoButton = document.getElementById("undo-button");
     undoButton.addEventListener("click", undo);
 
+    var slider = document.getElementById("brushSize");
+    var output = document.getElementById("brushSizeIndicator");
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+        brushSize = this.value;
+    }
 }
 function undo() {
     removeLastItem();
