@@ -159,7 +159,12 @@ function filledShape(event) {
         case "pointermove":
             if (currentFilledShape) {
                 if (event.buttons == 0) {
-                    currentFilledShape.simplify(10);
+                    currentFilledShape.simplify(5);
+                    currentFilledShape.closed = true;
+                    currentFilledShape.fillColor = fillColor;
+                    currentFilledShape.blendMode = blendMode;
+                    currentFilledShape.stroke = strokeFilledPoly;
+                    currentFilledShape.strokeColor = 'none';
                     currentFilledShape = false;
                     paper.view.draw();
                 } else {
@@ -177,10 +182,12 @@ function filledShape(event) {
                 console.log("strokefilledPoly:" + strokeFilledPoly)
                 currentFilledShape.strokeColor = 'black';
             }
-            currentFilledShape.closed = true;
+            currentFilledShape.closed = false;
             currentFilledShape.add(new paper.Point(pos.x, pos.y));
             currentFilledShape.fillColor = fillColor;
-            currentFilledShape.blendMode = blendMode;
+            //currentFilledShape.blendMode = blendMode;
+            //currentFilledShape.stroke = strokeFilledPoly;
+            currentFilledShape.strokeColor = 'black';
 
             //currentFilledShape.selected = true;
             break;

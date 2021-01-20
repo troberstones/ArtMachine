@@ -25,6 +25,7 @@
         -webkit-touch-callout: none !important;
         -webkit-user-select: none !important;
         -webkit-user-drag: none;
+        border: 1px solid black;
     }
 
     /* Scale canvas with resize attribute to full size */
@@ -50,9 +51,9 @@
     }</div>
 <!--<body onload="init();canvasInit()">
 -->
-
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 <body>
-    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
+    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off" ></canvas>
 
     <canvas id="palette" width="200" height="600" palette
         style="position: absolute; z-index: 0; border: 1px solid black"></canvas>

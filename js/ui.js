@@ -1,4 +1,5 @@
 function uiInit() {
+    setupPage();
     setupButton();
     setupBlendModesList();
     setupFileButton();
@@ -7,7 +8,14 @@ var mode = "polyfill";
 var adjustLastColor = false;
 var strokeFilledPoly = false;
 var blendMode = "normal";
+function setupPage(params) {
+    let canv = document.getElementById("myCanvas");
+    canv.width = screen.availWidth-350;
+    canv.height = screen.availHeight-100;
+    
 
+    
+}
 function setupButton() {
     saveButton = document.getElementById('saveButton')
     saveButton.onclick = function () {
