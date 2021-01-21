@@ -12,8 +12,10 @@ var brushSize = 10;
 
 function setupPage(params) {
     let canv = document.getElementById("myCanvas");
-    canv.width = screen.availWidth-350;
-    canv.height = screen.availHeight-100;
+    //canv.width = screen.availWidth-350;
+    //canv.height = screen.availHeight-100;
+    canv.width = window.innerWidth;
+    canv.height = window.innerHeight;
 }
 function setupButton() {
     saveButton = document.getElementById('saveButton')
