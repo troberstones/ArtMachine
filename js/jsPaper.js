@@ -37,9 +37,10 @@ function touchup(event) {
     switch (mode) {
         case "polyfill":
             if (currentFilledShape) {
-                currentFilledShape.simplify();
-                paper.view.draw();
-                currentFilledShape = false;
+                endFilledShape();
+                //currentFilledShape.simplify();
+                //paper.view.draw();
+                //currentFilledShape = false;
             }
             break;
     }
@@ -159,21 +160,30 @@ function drawCircle(event) {
     //console.log("Event:"+event.type)
 
 }
+function endFilledShape() {
+    console.log("ending ");
+    currentFilledShape.simplify(5);
+    //currentFilledShape.closed = true;
+    currentFilledShape.fillColor = fillColor;
+    currentFilledShape.blendMode = blendMode;
+    if(!strokeFilledPoly) {
+        currentFilledShape.stroke = false;
+        currentFilledShape.strokeColor = fillColor;
+    }
+    currentFilledShape = false;
+    paper.view.draw();
+    
+}
 var currentFilledShape = false;
 function filledShape(event) {
+    //console.log("e:"+event.type);
     switch (event.type) {
         case "pointermove":
             if (currentFilledShape) {
                 if (event.buttons == 0) {
-                    currentFilledShape.simplify(5);
-                    currentFilledShape.closed = true;
-                    currentFilledShape.fillColor = fillColor;
-                    currentFilledShape.blendMode = blendMode;
-                    currentFilledShape.stroke = strokeFilledPoly;
-                    currentFilledShape.strokeColor = 'none';
-                    currentFilledShape = false;
-                    paper.view.draw();
+
                 } else {
+                    //console.log("adding poitns");
                     var pos = getCursorPosition(event);
                     currentFilledShape.add(new paper.Point(pos.x, pos.y));
                     paper.view.draw();
@@ -182,7 +192,11 @@ function filledShape(event) {
             break;
         case "pointerdown":
             var pos = getCursorPosition(event);
+            if(currentFilledShape) {
+                endFilledShape();
+            }
             currentFilledShape = new paper.Path();
+
             if (strokeFilledPoly) {
                 currentFilledShape.stroke = strokeFilledPoly;
                 console.log("strokefilledPoly:" + strokeFilledPoly)
@@ -190,9 +204,9 @@ function filledShape(event) {
             }
             currentFilledShape.closed = false;
             currentFilledShape.add(new paper.Point(pos.x, pos.y));
-            currentFilledShape.fillColor = fillColor;
+            //currentFilledShape.fillColor = fillColor;
             //currentFilledShape.blendMode = blendMode;
-            //currentFilledShape.stroke = strokeFilledPoly;
+            currentFilledShape.stroke = strokeFilledPoly;
             currentFilledShape.strokeColor = 'black';
 
             //currentFilledShape.selected = true;

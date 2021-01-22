@@ -51,9 +51,11 @@
     }</div>
 <!--<body onload="init();canvasInit()">
 -->
-<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" /> 
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" />
+
 <body>
-<div id="modeList">
+    <div id="modeList">
+        <input type="button" value="Undo" id="undo-button">
         <input type="radio" name="mode" id="polyfill" value="polyfill" *>
         <label for="polyfill">PolyFill</label>
         <input type="radio" name="mode" id="brush" value="brush">
@@ -67,9 +69,11 @@
         <input type="radio" name="mode" id="line" value="line">
         <label for="picker">Line</label>
         <input type="radio" name="mode" id="circle" value="circle">
+        <input type="checkbox" name="strokeFilledPoly" id="strokeFilledPoly"><label for="strokeFilledPoly">Stroke
+            Filled Poly</label>
         <label for="picker">circle</label>
     </div>
-    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off" ></canvas>
+    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
 
     <canvas id="palette" width="200" height="600" palette
         style="position: absolute; z-index: 0; border: 1px solid black"></canvas>
@@ -86,23 +90,21 @@
     <div id="datareadoutcolor"></div>
     <div id="pickedColor">O</div>
     <p>
-        <input type="button" value="Undo" id="undo-button">
+        
         <input type="button" value="Download as SVG" id="export-button">
         <input type="button" value="Import SVG" id="import-button">
-        </p>
+    </p>
     <button id="saveButton">Save</button>
     <button id="loadButton">Load</button>
     <input type="file" id="fileElem" multiple="" accept="image/*" style="display:none">
     <div id="fileList">
         <p>No files selected!</p>
     </div>
-    
+
     <div>
         <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last
             Color</label>
         <div id="fillshape">
-            <input type="checkbox" name="strokeFilledPoly" id="strokeFilledPoly"><label for="strokeFilledPoly">Stroke
-                Filled Poly</label>
         </div>
         <div id="compositeMode"> </div>
     </div>
