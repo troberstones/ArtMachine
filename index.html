@@ -52,8 +52,23 @@
 <!--<body onload="init();canvasInit()">
 -->
 <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" /> 
-and then the correct value can be get from window.innerWidth / window.innerHeight
 <body>
+<div id="modeList">
+        <input type="radio" name="mode" id="polyfill" value="polyfill" *>
+        <label for="polyfill">PolyFill</label>
+        <input type="radio" name="mode" id="brush" value="brush">
+        <label for="brush">Brush</label>
+        <input type="radio" name="mode" id="picker" value="picker">
+        <label for="picker">Picker</label>
+        <input type="radio" name="mode" id="polygon" value="polygon">
+        <label for="picker">Polygon</label>
+        <input type="radio" name="mode" id="bezier" value="bezier">
+        <label for="picker">Bezier</label>
+        <input type="radio" name="mode" id="line" value="line">
+        <label for="picker">Line</label>
+        <input type="radio" name="mode" id="circle" value="circle">
+        <label for="picker">circle</label>
+    </div>
     <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off" ></canvas>
 
     <canvas id="palette" width="200" height="600" palette
@@ -81,22 +96,7 @@ and then the correct value can be get from window.innerWidth / window.innerHeigh
     <div id="fileList">
         <p>No files selected!</p>
     </div>
-    <div id="modeList">
-        <input type="radio" name="mode" id="polyfill" value="polyfill" *>
-        <label for="polyfill">PolyFill</label>
-        <input type="radio" name="mode" id="brush" value="brush">
-        <label for="brush">Brush</label>
-        <input type="radio" name="mode" id="picker" value="picker">
-        <label for="picker">Picker</label>
-        <input type="radio" name="mode" id="polygon" value="polygon">
-        <label for="picker">Polygon</label>
-        <input type="radio" name="mode" id="bezier" value="bezier">
-        <label for="picker">Bezier</label>
-        <input type="radio" name="mode" id="line" value="line">
-        <label for="picker">Line</label>
-        <input type="radio" name="mode" id="circle" value="circle">
-        <label for="picker">circle</label>
-    </div>
+    
     <div>
         <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last
             Color</label>
