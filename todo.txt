@@ -12,13 +12,13 @@
 15 pan canvas
 6 Color blender
 7 Color swatches for last used colors
-8 Draw Line
+8 //Draw Line
 9 Draw Stroke
 10 draw rect
 11 draw into transparent canvas and on termination of stroke, drop to the real canvas
 12 Add Layer interface
 13 Add Layer support
-14 Resize canvas to fit the screen
+14 //Resize canvas to fit the screen
 16 Add gamut masking
 17 add alternate palette display
 18 Add selection of shapes
