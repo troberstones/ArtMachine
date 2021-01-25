@@ -109,18 +109,45 @@ function pointermove(event) {
 
 function clickHandler(e) {
     console.log("clicked!");
-    if (mode == "picker") {
-        setColor(e, false);
-        revertMode();
-    } else if (mode == "polygon") {
-        console.log("polygon");
-        polygon(e);
-    } else if (mode == "bezier") {
-        console.log("bezier");
-        bezier(e);
+    switch (mode) {
+        case "select":
+            selectItem(e, false);
+            break;
+        case "picker":
+            setColor(e, false);
+            revertMode();
+            break;
+        case "polygon":
+            console.log("polygon");
+            polygon(e);
+
+            break;
+        case "bezier":
+            console.log("bezier");
+            bezier(e);
+            break;
+        default:
+            break;
     }
 }
-
+var hitOptions = {
+	segments: true,
+	stroke: true,
+	fill: true,
+	tolerance: 5
+};
+// Select some item on the canvas and set it to the active item
+var activeItem = null;
+var hitItem = null;
+function selectItem(event,someBool) {
+    var pos = getCursorPosition(event);
+    let hitPos = new paper.Point(pos.x, pos.y)
+    hitItem = paper.project.hitTest(hitPos,hitOptions);
+    if(hitItem) {
+        activeItem = hitItem.item;
+        activeItem.selected = true;
+    }
+}
 function colorChanged() {
     //Hi there1
     if (adjustLastColor == true) {
@@ -157,33 +184,16 @@ function drawCircle(event) {
             break;
 
     }
-    //console.log("Event:"+event.type)
+}
 
-}
-function endFilledShape() {
-    console.log("ending ");
-    currentFilledShape.simplify(5);
-    //currentFilledShape.closed = true;
-    currentFilledShape.fillColor = fillColor;
-    currentFilledShape.blendMode = blendMode;
-    if(!strokeFilledPoly) {
-        currentFilledShape.stroke = false;
-        currentFilledShape.strokeColor = fillColor;
-    }
-    currentFilledShape = false;
-    paper.view.draw();
-    
-}
 var currentFilledShape = false;
 function filledShape(event) {
-    //console.log("e:"+event.type);
     switch (event.type) {
         case "pointermove":
             if (currentFilledShape) {
                 if (event.buttons == 0) {
-
+                    console.log("buttons 0 pointer move")
                 } else {
-                    //console.log("adding poitns");
                     var pos = getCursorPosition(event);
                     currentFilledShape.add(new paper.Point(pos.x, pos.y));
                     paper.view.draw();
@@ -192,14 +202,13 @@ function filledShape(event) {
             break;
         case "pointerdown":
             var pos = getCursorPosition(event);
-            if(currentFilledShape) {
+            if (currentFilledShape) {
                 endFilledShape();
             }
             currentFilledShape = new paper.Path();
 
             if (strokeFilledPoly) {
                 currentFilledShape.stroke = strokeFilledPoly;
-                console.log("strokefilledPoly:" + strokeFilledPoly)
                 currentFilledShape.strokeColor = 'black';
             }
             currentFilledShape.closed = false;
@@ -214,9 +223,20 @@ function filledShape(event) {
         default:
             console.log("filled shape called for " + event.type);
             break;
-
     }
-    //console.log("Event:"+event.type)
+}
+function endFilledShape() {
+    console.log("ending ");
+    currentFilledShape.simplify(5);
+    //currentFilledShape.closed = true;
+    currentFilledShape.fillColor = fillColor;
+    currentFilledShape.blendMode = blendMode;
+    if (!strokeFilledPoly) {
+        currentFilledShape.stroke = false;
+        currentFilledShape.strokeColor = fillColor;
+    }
+    currentFilledShape = false;
+    paper.view.draw();
 
 }
 
@@ -228,7 +248,7 @@ function line(event, linemode) {
             if (event.buttons == 0) {
                 switch (linemode) {
                     case "stroke":
-                        if(currentLine) {
+                        if (currentLine) {
                             currentLine.simplify(10);
                         }
                         break;
@@ -263,7 +283,7 @@ function line(event, linemode) {
             lastpt = new paper.Point(pos.x, pos.y);
             currentLine = new paper.Path(new paper.Point(pos.x, pos.y), lastpt);
             let tmpBrushSize = brushSize;
-            if(brushSize < 3) {tmpBrushSise = 3;}
+            if (brushSize < 3) { tmpBrushSise = 3; }
             currentLine.strokeWidth = tmpBrushSize;
             //currentLine.strokeWidth = 10;
             currentLine.strokeColor = fillColor;
