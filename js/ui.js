@@ -18,8 +18,8 @@ function setupPage(params) {
     let canv = document.getElementById("myCanvas");
     //canv.width = screen.availWidth-350;
     //canv.height = screen.availHeight-100;
-    canv.width = window.innerWidth-350;
-    canv.height = window.innerHeight-200;
+    canv.width = window.innerWidth - 350;
+    canv.height = window.innerHeight - 200;
 }
 function setupButton() {
     saveButton = document.getElementById('saveButton')
@@ -36,7 +36,7 @@ function setupButton() {
     // export svg
     let exportButton = document.getElementById('export-button');
 
-    exportButton.addEventListener("click", function() {
+    exportButton.addEventListener("click", function () {
         var svg = paper.project.exportSVG({ asString: true });
         console.log("Export button pressed");
         console.log(svg);
@@ -64,24 +64,25 @@ function setupButton() {
 
     // Asjust last color
     adjustCB = document.getElementById("adjustLastColor");
-    adjustCB.addEventListener('change', function() {
+    adjustCB.addEventListener('change', function () {
         adjustLastColor = this.checked;
         //if (this.checked) {
-      });
-       // Asjust last color
-    strokePolyCB= document.getElementById("strokeFilledPoly");
-    strokePolyCB.addEventListener('change', function() {
+    });
+    // Asjust last color
+    strokePolyCB = document.getElementById("strokeFilledPoly");
+    strokePolyCB.addEventListener('change', function () {
         strokeFilledPoly = this.checked;
-        console.log("FPCB:"+this.checked);
+        console.log("FPCB:" + this.checked);
         //if (this.checked) {
-      });
-    let undoButton = document.getElementById("undo-button");
-    undoButton.addEventListener("click", undo);
+    });
+    document.getElementById("undo-button").addEventListener("click", undo);
 
-    let orderUp= document.getElementById("order-up");
-    orderUp.addEventListener("click", () => {changeOrder("up");});
-    let orderDown= document.getElementById("order-down");
-    orderDown.addEventListener("click", () => { changeOrder("down"); });
+    document.getElementById("order-top").addEventListener("click", () => { changeOrder("top"); });
+    document.getElementById("order-up").addEventListener("click", () => { changeOrder("up"); });
+    document.getElementById("order-down").addEventListener("click", () => { changeOrder("down"); });
+    document.getElementById("order-bottom").addEventListener("click", () => { changeOrder("bottom"); });
+    document.getElementById("delete").addEventListener("click", () => { changeOrder("delete"); });
+    document.getElementById("duplicate").addEventListener("click", () => { changeOrder("duplicate"); });
 
     var slider = document.getElementById("brushSize");
     var output = document.getElementById("brushSizeIndicator");
@@ -107,20 +108,33 @@ function setMode(value) {
     mode = value;
 }
 function changeOrder(direction) {
-        console.log("Order chage" + direction);
-    if(activeItem) {
-        console.log("change direction");
-        console.log("active index:" + activeItem.index)
+    if (activeItem) {
         let targetIndex = activeItem.index;
-        if(direction == "up") {
-            targetIndex +=1;
-        } else {
-            targetIndex -= 1;
-            if(targetIndex < 0) {
-                targetIndex = 0;
-            }
+        switch (direction) {
+            case "up":
+                targetIndex += 1;
+                paper.project.activeLayer.insertChild(targetIndex, activeItem);
+                break;
+            case "down":
+                targetIndex -= 1;
+                paper.project.activeLayer.insertChild(targetIndex, activeItem);
+                break;
+            case "top":
+                activeItem.bringToFront();
+                break;
+            case "bottom":
+                activeItem.sendToBack();
+                break;
+            case "delete":
+                activeItem.remove();
+                break;
+            case "duplicate":
+                activeItem.copyTo(paper.project.activeLayer);
+                //paper.project.activeLayer.copyTo(activeItem);
+                break;
+            default:
+                break;
         }
-        paper.project.activeLayer.insertChild(targetIndex, activeItem);
     }
 }
 function setupFileButton() {
@@ -128,7 +142,7 @@ function setupFileButton() {
     //loadButton = document.getElementById('loadButton')
     const fileSelect = document.getElementById("loadButton"),
         fileElem = document.getElementById("fileElem");
-        //fileList = document.getElementById("fileList");
+    //fileList = document.getElementById("fileList");
 
     fileSelect.addEventListener("click", function (e) {
         console.log("test add click");
@@ -176,7 +190,7 @@ function handleFiles() {
 
             const img = document.createElement("img");
             img.src = URL.createObjectURL(this.files[i]);
-            paper.project.importSVG(img.src, function(items, svg) {
+            paper.project.importSVG(img.src, function (items, svg) {
                 paper.project.activeLayer.addChild(items);
             });
             img.height = 60;
@@ -196,21 +210,21 @@ function setupBlendModesList() {
     let blendmodes = ['normal', 'multiply', 'screen', 'overlay', 'soft-light', 'hard- light', 'color-dodge', 'color-burn', 'darken', 'lighten', 'difference', 'exclusion', 'hue', 'saturation', 'luminosity', 'color', 'add', 'subtract', 'average', 'pin-light', 'negation', 'source-over', 'source-in', 'source-out', 'source-atop', 'destination-over', 'destination-in', 'destination-out', 'destination-atop', 'lighter', 'darker', 'copy', 'xor'];
     // Add code to add the list to the div
     selectObject = document.createElement("select");
-    selectObject.addEventListener("change",function(e) {
+    selectObject.addEventListener("change", function (e) {
         blendMode = this.value;
-        console.log("BlendMode:"+blendMode);
+        console.log("BlendMode:" + blendMode);
     });
     item.appendChild(selectObject);
     blendmodes.forEach(x => {
         newChild = document.createElement("option");
-        newChild.setAttribute("value",x);
+        newChild.setAttribute("value", x);
         newChild.innerHTML = x;
         selectObject.appendChild(newChild);
     });
     //newChild = document.createElement("option", "value","test");
     //item.appendChild(newChild);
 
-    
+
 }
 
 function convertImageToCanvas(image) {
