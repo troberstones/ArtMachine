@@ -46,6 +46,9 @@ function touchup(event) {
     }
 }
 function touchdown(event) {
+    if(mode != "picker") {
+        deselect();
+    } 
     switch (mode) {
         case "brush":
             brush(event)
@@ -61,6 +64,9 @@ function touchdown(event) {
             break;
         case "polygon":
             filledShape(event);
+            break;
+        case "select":
+            clickHandler(event);
             break;
         case "picker":
             clickHandler(event)
@@ -111,6 +117,7 @@ function clickHandler(e) {
     console.log("clicked!");
     switch (mode) {
         case "select":
+            console.log("select started!");
             selectItem(e, false);
             break;
         case "picker":
@@ -131,28 +138,40 @@ function clickHandler(e) {
     }
 }
 var hitOptions = {
-	segments: true,
-	stroke: true,
-	fill: true,
-	tolerance: 5
+    segments: true,
+    stroke: true,
+    fill: true,
+    tolerance: 5
 };
 // Select some item on the canvas and set it to the active item
 var activeItem = null;
 var hitItem = null;
-function selectItem(event,someBool) {
+function deselect() {
+    if(activeItem) {
+        activeItem.selected = false;
+        activeItem = null;
+    }
+}
+function selectItem(event, someBool) {
     var pos = getCursorPosition(event);
     let hitPos = new paper.Point(pos.x, pos.y)
-    hitItem = paper.project.hitTest(hitPos,hitOptions);
-    if(hitItem) {
+    hitItem = paper.project.hitTest(hitPos, hitOptions);
+    deselect();
+    if (hitItem) {
+        console.log("Selected item!");
         activeItem = hitItem.item;
         activeItem.selected = true;
     }
 }
 function colorChanged() {
     //Hi there1
-    if (adjustLastColor == true) {
-        paper.project.activeLayer.lastChild.fillColor = fillColor;
-        paper.view.draw();
+    if (activeItem) {
+        activeItem.fillColor = fillColor;
+    } else {
+        if (adjustLastColor == true) {
+            paper.project.activeLayer.lastChild.fillColor = fillColor;
+            paper.view.draw();
+        }
     }
 }
 function removeLastItem() {

@@ -1,3 +1,7 @@
+//const { dir } = require("console");
+
+//const { dir } = require("console");
+
 function uiInit() {
     setupPage();
     setupButton();
@@ -74,6 +78,11 @@ function setupButton() {
     let undoButton = document.getElementById("undo-button");
     undoButton.addEventListener("click", undo);
 
+    let orderUp= document.getElementById("order-up");
+    orderUp.addEventListener("click", () => {changeOrder("up");});
+    let orderDown= document.getElementById("order-down");
+    orderDown.addEventListener("click", () => { changeOrder("down"); });
+
     var slider = document.getElementById("brushSize");
     var output = document.getElementById("brushSizeIndicator");
     output.innerHTML = slider.value; // Display the default slider value
@@ -96,6 +105,23 @@ function setMode(value) {
     console.log("radio button!" + value)
     previousMode = mode;
     mode = value;
+}
+function changeOrder(direction) {
+        console.log("Order chage" + direction);
+    if(activeItem) {
+        console.log("change direction");
+        console.log("active index:" + activeItem.index)
+        let targetIndex = activeItem.index;
+        if(direction == "up") {
+            targetIndex +=1;
+        } else {
+            targetIndex -= 1;
+            if(targetIndex < 0) {
+                targetIndex = 0;
+            }
+        }
+        paper.project.activeLayer.insertChild(targetIndex, activeItem);
+    }
 }
 function setupFileButton() {
     let fileHandle;

@@ -21,8 +21,8 @@
 14 //Resize canvas to fit the screen
 16 Add gamut masking
 17 add alternate palette display
-18 Add selection of shapes
-19 add editing of shape ordering
+18 //Add selection of shapes
+19 //add editing of shape ordering
 20 add moveing of shapes
 21 double tap undo
 21 Edit knots in shape
