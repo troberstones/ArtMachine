@@ -93,6 +93,18 @@ function setupButton() {
         output.innerHTML = this.value;
         brushSize = this.value;
     }
+    getSlider("rslider").addEventListener("change",function(){colorSlider("r",this.value)});
+    getSlider("gslider").addEventListener("change",function(){colorSlider("g",this.value)});
+    getSlider("bslider").addEventListener("change",function(){colorSlider("b",this.value)});
+    getSlider("hslider").addEventListener("change",function(){colorSlider("h",this.value)});
+    getSlider("sslider").addEventListener("change",function(){colorSlider("s",this.value)});
+    getSlider("vslider").addEventListener("change",function(){colorSlider("v",this.value)});
+}
+function getSlider(id) {
+    return document.getElementById(id);
+}
+function colorSlider(mode, value) {
+    console.log("ColorSlider:"+mode+" "+value);
 }
 function undo() {
     removeLastItem();
