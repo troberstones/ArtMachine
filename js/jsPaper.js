@@ -31,7 +31,7 @@ function canvasInit() {
     // in JavaScript. Instead, we need to call the add() function:
     //path.lineTo(start.add([200, -50]));
     // Draw the view now:
-    paper.view.draw();
+    //paper.view.draw();
 }
 function touchup(event) {
     switch (mode) {
@@ -100,10 +100,11 @@ function pointermove(event) {
             //clickHandler(event)
             break;
         case "select":
+            document.getElementById("brushSizeIndicator").innerHTML = "Buttons:"+event.buttons
             if(activeItem && event.buttons != 0) {
                 var pos = getCursorPosition(event);
                 activeItem.position = new paper.Point(pos.x, pos.y);
-                paper.view.draw();
+                //paper.view.draw();
             }
             break;
         case "line":
@@ -177,14 +178,14 @@ function colorChanged() {
     } else {
         if (adjustLastColor == true) {
             paper.project.activeLayer.lastChild.fillColor = fillColor;
-            paper.view.draw();
+            //paper.view.draw();
         }
     }
 }
 function removeLastItem() {
     let target = paper.project.activeLayer.lastChild;
     target.remove();
-    paper.view.draw();
+    //paper.view.draw();
 }
 var currentCircle = false;
 function drawCircle(event) {
@@ -196,7 +197,7 @@ function drawCircle(event) {
             if (currentCircle) {
                 var pos = getCursorPosition(event);
                 currentCircle.position = new paper.Point(pos.x, pos.y);
-                paper.view.draw();
+                //paper.view.draw();
             }
             break;
         case "pointerdown":
@@ -222,7 +223,7 @@ function filledShape(event) {
                 } else {
                     var pos = getCursorPosition(event);
                     currentFilledShape.add(new paper.Point(pos.x, pos.y));
-                    paper.view.draw();
+                    //paper.view.draw();
                 }
             }
             break;
@@ -262,7 +263,7 @@ function endFilledShape() {
         currentFilledShape.strokeColor = fillColor;
     }
     currentFilledShape = false;
-    paper.view.draw();
+    //paper.view.draw();
 
 }
 
@@ -301,7 +302,7 @@ function line(event, linemode) {
                         break;
                 }
 
-                paper.view.draw();
+                //paper.view.draw();
             }
             break;
         case "pointerdown":
