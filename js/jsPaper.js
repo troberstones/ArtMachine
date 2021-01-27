@@ -46,7 +46,7 @@ function touchup(event) {
     }
 }
 function touchdown(event) {
-    if(mode != "picker") {
+    if(mode != "select") {
         deselect();
     } 
     switch (mode) {
@@ -98,6 +98,13 @@ function pointermove(event) {
             break;
         case "picker":
             //clickHandler(event)
+            break;
+        case "select":
+            if(activeItem && event.buttons != 0) {
+                var pos = getCursorPosition(event);
+                activeItem.position = new paper.Point(pos.x, pos.y);
+                paper.view.draw();
+            }
             break;
         case "line":
             line(event, "segment")
