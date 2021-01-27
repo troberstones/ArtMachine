@@ -1,3 +1,5 @@
+//const { debug } = require("console");
+
 window.onload = function () {
     uiInit();
     canvasInit();
@@ -82,7 +84,12 @@ function touchdown(event) {
     }
 
 }
+function printMessage(message) {
+    document.getElementById("brushSizeIndicator").innerHTML=message;
+}
+
 function pointermove(event) {
+    printMessage(mode);
     switch (mode) {
         case "brush":
             brush(event)
@@ -100,7 +107,7 @@ function pointermove(event) {
             //clickHandler(event)
             break;
         case "select":
-            document.getElementById("brushSizeIndicator").innerHTML = "Buttons:"+event.buttons
+            printMessage("Buttons:"+event.buttons);
             if(activeItem && event.buttons != 0) {
                 var pos = getCursorPosition(event);
                 activeItem.position = new paper.Point(pos.x, pos.y);
