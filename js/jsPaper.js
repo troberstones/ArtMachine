@@ -179,7 +179,7 @@ function selectItem(event, someBool) {
     }
 }
 function colorChanged() {
-    //Hi there1
+    updateColorSliders();
     if (activeItem) {
         activeItem.fillColor = fillColor;
     } else {

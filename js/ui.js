@@ -4,7 +4,7 @@
 
 function uiInit() {
     setupPage();
-    setupButton();
+    setupButtons();
     setupBlendModesList();
     setupFileButton();
 }
@@ -16,12 +16,12 @@ var brushSize = 10;
 
 function setupPage(params) {
     let canv = document.getElementById("myCanvas");
-    //canv.width = screen.availWidth-350;
-    //canv.height = screen.availHeight-100;
     canv.width = window.innerWidth - 350;
     canv.height = window.innerHeight - 200;
 }
-function setupButton() {
+
+function setupButtons() {
+    // SaveButton
     saveButton = document.getElementById('saveButton')
     saveButton.onclick = function () {
         var image = convertCanvasToImage(canvas);
@@ -34,49 +34,48 @@ function setupButton() {
     }
 
     // export svg
-    let exportButton = document.getElementById('export-button');
+    document.getElementById('export-button').addEventListener(
+        "click", function () {
+            var svg = paper.project.exportSVG({ asString: true });
+            console.log("Export button pressed");
+            console.log(svg);
 
-    exportButton.addEventListener("click", function () {
-        var svg = paper.project.exportSVG({ asString: true });
-        console.log("Export button pressed");
-        console.log(svg);
+            var anchor = document.createElement('a');
 
-        var anchor = document.createElement('a');
-
-        console.log(anchor);
-        var svgData = 'data:image/svg+xml;base64,' + btoa(svg);
-        anchor.setAttribute('href', svgData);
-        anchor.setAttribute('download', 'export.svg');
-        anchor.click();
-    });
+            console.log(anchor);
+            var svgData = 'data:image/svg+xml;base64,' + btoa(svg);
+            anchor.setAttribute('href', svgData);
+            anchor.setAttribute('download', 'export.svg');
+            anchor.click();
+        });
 
     // import svg
-    let importSvgButton = document.getElementById('import-button');
+    //let importSvgButton = document.getElementById('import-button');
 
+    //setup modes checkboxes
     modeRadioButton = document.getElementsByName("mode");
     for (var i = 0, max = modeRadioButton.length; i < max; i++) {
         modeRadioButton[i].onclick = function () {
             setMode(this.value);
         }
     }
-    polyfill = document.getElementById(mode)
-    polyfill.click()
+    // Click the polyfill button
+    document.getElementById(mode).click()
 
     // Asjust last color
     adjustCB = document.getElementById("adjustLastColor");
     adjustCB.addEventListener('change', function () {
         adjustLastColor = this.checked;
-        //if (this.checked) {
     });
-    // Asjust last color
-    strokePolyCB = document.getElementById("strokeFilledPoly");
-    strokePolyCB.addEventListener('change', function () {
-        strokeFilledPoly = this.checked;
-        console.log("FPCB:" + this.checked);
-        //if (this.checked) {
-    });
+
+    //  setup stroke button callback
+    document.getElementById("strokeFilledPoly").addEventListener(
+        'change', function () { strokeFilledPoly = this.checked });
+
+    // Undo Button
     document.getElementById("undo-button").addEventListener("click", undo);
 
+    // Odering buttons
     document.getElementById("order-top").addEventListener("click", () => { changeOrder("top"); });
     document.getElementById("order-up").addEventListener("click", () => { changeOrder("up"); });
     document.getElementById("order-down").addEventListener("click", () => { changeOrder("down"); });
@@ -84,6 +83,7 @@ function setupButton() {
     document.getElementById("delete").addEventListener("click", () => { changeOrder("delete"); });
     document.getElementById("duplicate").addEventListener("click", () => { changeOrder("duplicate"); });
 
+    // Brush size
     var slider = document.getElementById("brushSize");
     var output = document.getElementById("brushSizeIndicator");
     output.innerHTML = slider.value; // Display the default slider value
@@ -93,18 +93,31 @@ function setupButton() {
         output.innerHTML = this.value;
         brushSize = this.value;
     }
-    getSlider("rslider").addEventListener("change",function(){colorSlider("r",this.value)});
-    getSlider("gslider").addEventListener("change",function(){colorSlider("g",this.value)});
-    getSlider("bslider").addEventListener("change",function(){colorSlider("b",this.value)});
-    getSlider("hslider").addEventListener("change",function(){colorSlider("h",this.value)});
-    getSlider("sslider").addEventListener("change",function(){colorSlider("s",this.value)});
-    getSlider("vslider").addEventListener("change",function(){colorSlider("v",this.value)});
+
+    // setup color sliders
+    ColorSliders.r = getSlider("rslider");
+    ColorSliders.g = getSlider("gslider");
+    ColorSliders.b = getSlider("bslider");
+    ColorSliders.h = getSlider("hslider");
+    ColorSliders.s = getSlider("sslider");
+    ColorSliders.v = getSlider("vslider");
+
+    ColorSliders.r.addEventListener("change", function () { colorSlider("r", this.value) });
+    ColorSliders.g.addEventListener("change", function () { colorSlider("g", this.value) });
+    ColorSliders.b.addEventListener("change", function () { colorSlider("b", this.value) });
+    ColorSliders.h.addEventListener("change", function () { colorSlider("h", this.value) });
+    ColorSliders.s.addEventListener("change", function () { colorSlider("s", this.value) });
+    ColorSliders.v.addEventListener("change", function () { colorSlider("v", this.value) });
 }
+
+let ColorSliders = { r: null, g: null, b: null, h: null, s: null, v: null };
+
 function getSlider(id) {
     return document.getElementById(id);
 }
 function colorSlider(mode, value) {
-    console.log("ColorSlider:"+mode+" "+value);
+    console.log("ColorSlider:" + mode + " " + value);
+    //fillColor
 }
 function undo() {
     removeLastItem();

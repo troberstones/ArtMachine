@@ -121,6 +121,12 @@ function setColor(event, moveIndicator) {
     colorChanged();
     drawSwatch(event);
 }
+function updateColorSliders() {
+    colors = fillColor.replace("rgb(","").replace(")","").split(",");
+    ColorSliders.r.value = colors[0];
+    ColorSliders.g.value = colors[1];
+    ColorSliders.b.value = colors[2];
+}
 function drawPalette() {
     const segmentCount = 50;
     const hsteps = 20;
