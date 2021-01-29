@@ -102,12 +102,19 @@ function setupButtons() {
     ColorSliders.s = getSlider("sslider");
     ColorSliders.v = getSlider("vslider");
 
-    ColorSliders.r.addEventListener("change", function () { colorSlider("r", this.value) });
-    ColorSliders.g.addEventListener("change", function () { colorSlider("g", this.value) });
-    ColorSliders.b.addEventListener("change", function () { colorSlider("b", this.value) });
-    ColorSliders.h.addEventListener("change", function () { colorSlider("h", this.value) });
-    ColorSliders.s.addEventListener("change", function () { colorSlider("s", this.value) });
-    ColorSliders.v.addEventListener("change", function () { colorSlider("v", this.value) });
+    //ColorSliders.r.addEventListener("change", function () { colorSlider("r", this.value) });
+    //ColorSliders.g.addEventListener("change", function () { colorSlider("g", this.value) });
+    //ColorSliders.b.addEventListener("change", function () { colorSlider("b", this.value) });
+    //ColorSliders.h.addEventListener("change", function () { colorSlider("h", this.value) });
+    //ColorSliders.s.addEventListener("change", function () { colorSlider("s", this.value) });
+    //ColorSliders.v.addEventListener("change", function () { colorSlider("v", this.value) });
+
+    ColorSliders.r.addEventListener("input", function () { colorSlider("r", this.value) });
+    ColorSliders.g.addEventListener("input", function () { colorSlider("g", this.value) });
+    ColorSliders.b.addEventListener("input", function () { colorSlider("b", this.value) });
+    ColorSliders.h.addEventListener("input", function () { colorSlider("h", this.value) });
+    ColorSliders.s.addEventListener("input", function () { colorSlider("s", this.value) });
+    ColorSliders.v.addEventListener("input", function () { colorSlider("v", this.value) });
 }
 
 let ColorSliders = { r: null, g: null, b: null, h: null, s: null, v: null };
@@ -116,8 +123,41 @@ function getSlider(id) {
     return document.getElementById(id);
 }
 function colorSlider(mode, value) {
-    console.log("ColorSlider:" + mode + " " + value);
-    //fillColor
+    //console.log("ColorSlider:" + mode + " " + value);
+    color = getColorComponents(fillColor);
+
+    switch (mode) {
+        case "r":
+           color[0] = value; 
+            break;
+        case "g":
+           color[1] = value; 
+            break;
+        case "b":
+           color[2] = value; 
+            break;
+        case "h":
+            hsvColor = rgb2hsv(color[0]/255,color[1]/255,color[2]/255);            
+            hsvColor[0] = value;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb("+color[0]*255+","+color[1]*255+","+color[2]*255+")";
+            break;
+        case "s":
+            hsvColor = rgb2hsv(color[0]/255,color[1]/255,color[2]/255);            
+            hsvColor[1] = value/255;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb("+color[0]*255+","+color[1]*255+","+color[2]*255+")";
+            break;
+        case "v":
+            hsvColor = rgb2hsv(color[0]/255,color[1]/255,color[2]/255);            
+            hsvColor[2] = value/255;
+            color = hsv2rgb(...hsvColor)
+            fillColor = "rgb("+color[0]*255+","+color[1]*255+","+color[2]*255+")"; 
+            break;
+        default:
+            break;
+    }
+    colorChanged();
 }
 function undo() {
     removeLastItem();

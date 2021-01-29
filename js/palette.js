@@ -1,3 +1,4 @@
+
 var fillColor;
 var oldFillColor;
 var itLooksGood;
@@ -121,11 +122,19 @@ function setColor(event, moveIndicator) {
     colorChanged();
     drawSwatch(event);
 }
+function getColorComponents(colorString) {
+    return colorString.replace("rgb(","").replace(")","").split(",");
+}
 function updateColorSliders() {
-    colors = fillColor.replace("rgb(","").replace(")","").split(",");
+    colors = getColorComponents(fillColor)
     ColorSliders.r.value = colors[0];
     ColorSliders.g.value = colors[1];
     ColorSliders.b.value = colors[2];
+    let results = rgb2hsv(colors[0]/255,colors[1]/255,colors[2]/255);
+    ColorSliders.h.value = results[0];
+    ColorSliders.s.value = results[1]*255;
+    ColorSliders.v.value = results[2]*255;
+
 }
 function drawPalette() {
     const segmentCount = 50;
@@ -178,3 +187,14 @@ function hslToRgb(h, s, l) {
 
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
+
+// From stackexchange
+https://stackoverflow.com/questions/8022885/rgb-to-hsv-color-in-javascript
+function rgb2hsv(r,g,b) {
+    let v=Math.max(r,g,b), c=v-Math.min(r,g,b);
+    let h= c && ((v==r) ? (g-b)/c : ((v==g) ? 2+(b-r)/c : 4+(r-g)/c)); 
+    return [60*(h<0?h+6:h), v&&c/v, v];
+  }
+
+let hsv2rgb = (h,s,v, f= (n,k=(n+h/60)%6) => v - v*s*Math.max( Math.min(k,4-k,1), 0)) => [f(5),f(3),f(1)];    
+ 
