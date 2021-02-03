@@ -1,5 +1,3 @@
-//const { debug } = require("console");
-
 window.onload = function () {
     uiInit();
     canvasInit();
@@ -48,9 +46,9 @@ function touchup(event) {
     }
 }
 function touchdown(event) {
-    if(mode != "select") {
+    if (mode != "select") {
         deselect();
-    } 
+    }
     switch (mode) {
         case "brush":
             brush(event)
@@ -76,6 +74,9 @@ function touchdown(event) {
         case "line":
             line(event, "segment");
             break;
+        case "rect":
+            line(event, "rect");
+            break;
         case "bezier":
             bezier(event)
             break;
@@ -85,7 +86,7 @@ function touchdown(event) {
 
 }
 function printMessage(message) {
-    document.getElementById("brushSizeIndicator").innerHTML=message;
+    document.getElementById("brushSizeIndicator").innerHTML = message;
 }
 
 function pointermove(event) {
@@ -107,8 +108,8 @@ function pointermove(event) {
             //clickHandler(event)
             break;
         case "select":
-            printMessage("Buttons:"+event.buttons);
-            if(activeItem && event.buttons != 0) {
+            printMessage("Buttons:" + event.buttons);
+            if (activeItem && event.buttons != 0) {
                 var pos = getCursorPosition(event);
                 activeItem.position = new paper.Point(pos.x, pos.y);
                 //paper.view.draw();
@@ -116,6 +117,9 @@ function pointermove(event) {
             break;
         case "line":
             line(event, "segment")
+            break;
+        case "rect":
+            line(event, "rect")
             break;
         case "stroke":
             line(event, "stroke")
@@ -162,7 +166,7 @@ var hitOptions = {
 var activeItem = null;
 var hitItem = null;
 function deselect() {
-    if(activeItem) {
+    if (activeItem) {
         activeItem.selected = false;
         activeItem = null;
     }
@@ -305,6 +309,11 @@ function line(event, linemode) {
                     case "stroke":
                         currentLine.add(new paper.Point(pos.x, pos.y));
                         break;
+                    case "rect":
+                        currentLine.bottomRight = new paper.Point(pos.x, pos.y);
+                        //currentLine.bottomRight.x = pos.x;
+                        //currentLine.bottomRight.y = pos.y;
+                        break;
                     default:
                         break;
                 }
@@ -315,15 +324,26 @@ function line(event, linemode) {
         case "pointerdown":
             var pos = getCursorPosition(event);
             lastpt = new paper.Point(pos.x, pos.y);
-            currentLine = new paper.Path(new paper.Point(pos.x, pos.y), lastpt);
-            let tmpBrushSize = brushSize;
-            if (brushSize < 3) { tmpBrushSise = 3; }
-            currentLine.strokeWidth = tmpBrushSize;
-            //currentLine.strokeWidth = 10;
-            currentLine.strokeColor = fillColor;
-            //currentLine.selected = true;
-            //currentLine.fillColor = fillColor;
-            currentLine.blendMode = blendMode;
+            switch (linemode) {
+                case "rect":
+                    //currentLine = new paper.Rectangle(lastpt,new paper.Point(pos.x+100, pos.y+100));
+                    currentLine = new paper.Rectangle({
+                        rectangle: {
+                            topLeft: [pos.x, pos.y],
+                            bottomRight: [pos.y + 10, pos.y + 10]
+                        },
+                        strokeColor: 'black'
+                    });
+                    break;
+                default:
+                    currentLine = new paper.Path(new paper.Point(pos.x, pos.y), lastpt);
+                    let tmpBrushSize = brushSize;
+                    if (brushSize < 3) { tmpBrushSise = 3; }
+                    currentLine.strokeWidth = tmpBrushSize;
+                    currentLine.strokeColor = fillColor;
+                    currentLine.blendMode = blendMode;
+                    break;
+            }
             break;
         default:
             console.log("line called for " + event.type);

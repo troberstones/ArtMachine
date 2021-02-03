@@ -1,20 +1,20 @@
 //1 Save
 //2 Load
 3 //Fix selected color display on ipad
-4 Modify current color
-    shift red
-    shift blue
-    shift green
-    shift hue
-    shift value 
-    shift saturation
+4 //Modify current color
+    //shift red
+    //shift blue
+    //shift green
+    //shift hue
+    //shift value 
+    //shift saturation
 //5 Display current color in a large format
 15 pan canvas
 6 Color blender
 7 Color swatches for last used colors
 8 //Draw Line
 9 Draw Stroke
-10 draw rect
+10 //draw rect
 11 draw into transparent canvas and on termination of stroke, drop to the real canvas
 12 Add Layer interface
 13 Add Layer support
@@ -30,4 +30,6 @@
 23 boolean of selected shapes
 24 fill texture 
 25 fill gradient
+
+
 
