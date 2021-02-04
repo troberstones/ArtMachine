@@ -4,7 +4,8 @@
 <head>
     <!-- Load the Paper.js library -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 </head>
 <style>
@@ -12,14 +13,20 @@
     body {
         display: grid;
         height: 100vh;
-        padding:0%;
+        padding: 0%;
         grid-template: auto 1fr auto / auto 1fr auto
     }
 
     .header {
         background: lightpink;
-        padding: 2rem;
-        grid-column: 1 / 4;
+        padding: 0rem;
+        grid-column: 1/ 4;
+        display: grid;
+        grid-template-columns: 1fr minmax(150px, 10%);
+    }
+
+    .title {
+        align-items: right;
     }
 
     .left-sidebar {
@@ -39,7 +46,7 @@
 
     footer {
         background: wheat;
-        padding: 2rem;
+        padding: 0rem;
         text-align: center;
         grid-column: 1 / 4;
     }
@@ -52,59 +59,83 @@
     .right-sidebar {
         padding: 1rem;
     }
+
     .button {
-  background-color: #4e4e4e; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  border-radius: 12px;
-  font-size: 16px;
-}
+        background-color: #4e4e4e;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+    .button:hover {
+        color: green;
+    }
+    
 
-label.btn {
-  padding: 1px 1px;
-  color: rgb(255, 255, 255);
-  display:block
-}
+    label.btn {
+        padding: 1px 1px;
+        color: rgb(255, 255, 255);
+        display: block
+    }
 
-label.btn input {
-  opacity: 0;
-  position: absolute;
-}
+    label.btn input {
+        opacity: 0;
+        position: absolute;
+    }
 
-label.btn span {
-  text-align: center;
-  padding: 5px 5px;
-  display: block;
-}
+    label.btn span {
+        text-align: center;
+        padding: 5px 5px;
+        display: block;
+    }
 
-label.btn input:checked+span {
-  background-color: rgb(41, 41, 41);
-  color: #fff;
-}
+    label.btn input:checked+span {
+        background-color: rgb(41, 41, 41);
+        color: #fff;
+    }
 
+    .divider {
+        width: 5px;
+        height: auto;
+        display: inline-block;
+    }
 </style>
 
 <body>
-    <div class="header"><h1 contenteditable>Header.com</h1></div>
+    <div class="header">
+        <div>HI</div>
+        <h2 class="title">ArtMachine</h2>
+    </div>
     <div class="left-sidebar">
         <button class="button material-icons" value="Undo" id="undo-button">undo</button>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="polyfill" value="polyfill"><span class="material-icons">gesture</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="brush" value="brush">      <span class="material-icons">brush</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="picker" value="picker">    <span class="material-icons">colorize</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="polygon" value="polygon">  <span class="material-icons">timeline</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="bezier" value="bezier">    <span class="material-icons">swap_calls</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="line" value="line">        <span class="material-icons">horizontal_rule</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="circle" value="circle">    <span class="material-icons">add_circle_outline</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="rect" value="rect">        <span class="material-icons">crop_din</span></label>
-        <label class="btn btn-primary"><input type="radio" name="mode" id="select" value="select">    <span class="material-icons">navigation</span></label>
+        <div class="divider"></div>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="polyfill" value="polyfill"><span
+                class="material-icons">gesture</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="brush" value="brush"> <span
+                class="material-icons">brush</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="picker" value="picker"> <span
+                class="material-icons">colorize</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="polygon" value="polygon"> <span
+                class="material-icons">timeline</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="bezier" value="bezier"> <span
+                class="material-icons">swap_calls</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="line" value="line"> <span
+                class="material-icons">horizontal_rule</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="circle" value="circle"> <span
+                class="material-icons">add_circle_outline</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="rect" value="rect"> <span
+                class="material-icons">crop_din</span></label>
+        <label class="btn btn-primary"><input type="radio" name="mode" id="select" value="select"> <span
+                class="material-icons">navigation</span></label>
     </div>
     <main contenteditable></main>
     <div class="right-sidebar" contenteditable>Right Sidebar</div>
-    <footer contenteditable>Footer Content — Header.com 2020</footer>>
+    <footer contenteditable>Footer Content — Header.com 2020</footer>
     </div>
 </body>
 
