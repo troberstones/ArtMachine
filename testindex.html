@@ -19,11 +19,15 @@
 
     .header {
         background: lightpink;
-        padding: 0rem;
-        grid-column: 1/ 4;
+        padding: .15rem;
+        grid-column: 2/ 4;
         display: grid;
-        grid-template-columns: 1fr minmax(150px, 10%);
+        grid-template-columns: 1fr auto;
     }
+    /*.headerbtns {
+        background: red;
+    }
+    */
 
     .title {
         align-items: right;
@@ -65,15 +69,28 @@
         /* Green */
         border: none;
         color: white;
-        padding: 15px 15px;
+        padding: 10px 10px;
         text-align: center;
         text-decoration: none;
         display: block;
         border-radius: 12px;
-        font-size: 16px;
+        font-size: 20px;
     }
+    .button-inline {
+        background-color: #4e4e4e;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline;
+        border-radius: 12px;
+        font-size: 20px;
+    }
+
     .button:hover {
-        color: green;
+        color: rgb(247, 140, 140);
     }
     
 
@@ -101,15 +118,34 @@
 
     .divider {
         width: 5px;
-        height: auto;
-        display: inline-block;
+        height: 8px;
+        display: block;
+    }
+    .datareadout {
+        background-color: rgb(174, 174, 211);
+        font-size: 8pt;
+        display:inline
+        
+    }
+    .colorslider {
+        display: block;
     }
 </style>
 
 <body>
     <div class="header">
-        <div>HI</div>
-        <h2 class="title">ArtMachine</h2>
+        <div class="headerbtns">
+            <input type="button" class="button-inline material-icons" value="file_upload" old_value="moveTop" id="order-top">
+            <input type="button" class="button-inline material-icons" value="keyboard_arrow_up" old_value="moveup" id="order-up">
+            <input type="button" class="button-inline material-icons" value="keyboard_arrow_down" old_value="modeDown" id="order-down">
+            <input type="button" class="button-inline material-icons" value="file_download" old_value="moveBottom" id="order-bottom">
+            <input type="button" class="button-inline material-icons" value="delete_outline" old_value="Delete" id="delete">
+            <input type="button" class="button-inline material-icons" value="control_point_duplicate" old_value="duplicate" id="duplicate">
+            <input type="button" class="button-inline material-icons" value="photo" id="saveButton">
+            <input type="button" class="button-inline material-icons" value="upload_file" id="loadButton">
+            <input type="button" class="button-inline material-icons" value="download_for_offline" id="export-button">
+        </div>
+        <h4 class="title">ArtMachine</h4>
     </div>
     <div class="left-sidebar">
         <button class="button material-icons" value="Undo" id="undo-button">undo</button>
@@ -132,10 +168,32 @@
                 class="material-icons">crop_din</span></label>
         <label class="btn btn-primary"><input type="radio" name="mode" id="select" value="select"> <span
                 class="material-icons">navigation</span></label>
+
     </div>
     <main contenteditable></main>
-    <div class="right-sidebar" contenteditable>Right Sidebar</div>
-    <footer contenteditable>Footer Content — Header.com 2020</footer>
+    <div class="right-sidebar">
+        Right Sidebar
+        <div clas="colorManip">
+            <div>
+           r<input type="range" class="colorslider" name="rslider" min="0" max="255" id="rslider" class="slider">
+           g<input type="range" class="colorslider" name="gslider" min="0" max="255" id="gslider" class="slider">
+           b<input type="range" class="colorslider" name="bslider" min="0" max="255" id="bslider" class="slider">
+           </div>
+           <div>
+           h<input type="range" class="colorslider" name="hslider" min="0" max="360" id="hslider" class="slider">
+           s<input type="range" class="colorslider" name="sslider" min="0" max="255" id="sslider" class="slider">
+           v<input type="range" class="colorslider" name="vslider" min="0" max="255" id="vslider" class="slider">
+            </div>
+        </div>
+    </div>
+    <footer>
+        <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last
+            Color</label>
+           ArtMachine
+           <div class="datareadout" id="datareadout">data</div>
+           <div class="datareadout" id="datareadoutcolor">data</div>
+           <div class="datareadout" id="pickedColor">data</div>
+        </footer>
     </div>
 </body>
 
