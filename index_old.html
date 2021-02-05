@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="js/paper.js"></script>
+    <!-- Load external PaperScript and associate it with myCanvas -->
+    <!-- <script type="text/paperscript" src="js/myScript.js" canvas="myCanvas">
+-->
+    <script type="text/javascript" src="js/jsPaper.js"></script>
+    </script>
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/palette.js"></script>
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+
+    canvas {
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        -webkit-user-drag: none;
+        -webkit-user-drag: none;
+    }
+
+    /* Scale canvas with resize attribute to full size */
+    body {
+        background-color: grey;
+    }
+</style>
+<div hidden="true">
+    canvas[resize] {
+    width: 600px;
+    height: 600px;
+    }
+    canvas[palette] {
+    width: 100px;
+    height: 300px;
+    border: 1px;
+    border-color: black;
+    }
+    #paletteOverlay {
+    position: relative;
+    right:150px
+    }
+    }</div>
+<!--<body onload="init();canvasInit()">
+-->
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height" />
+
+<body>
+    <div id="modeList">
+        <input type="button" value="Undo" id="undo-button">
+        <input type="radio" name="mode" id="polyfill" value="polyfill" *>
+        <label for="polyfill">PolyFill</label>
+        <input type="radio" name="mode" id="brush" value="brush">
+        <label for="brush">Brush</label>
+        <input type="radio" name="mode" id="picker" value="picker">
+        <label for="picker">Picker</label>
+        <input type="radio" name="mode" id="polygon" value="polygon">
+        <label for="picker">Polygon</label>
+        <input type="radio" name="mode" id="bezier" value="bezier">
+        <label for="picker">Bezier</label>
+        <input type="radio" name="mode" id="line" value="line">
+        <label for="picker">Line</label>
+        <input type="radio" name="mode" id="circle" value="circle">
+        <label for="picker">circle</label>
+        <input type="radio" name="mode" id="rect" value="rect">
+        <label for="rect">Rect</label>
+        <input type="radio" name="mode" id="select" value="select">
+        <label for="picker">select</label>
+        <input type="checkbox" name="strokeFilledPoly" id="strokeFilledPoly"><label for="strokeFilledPoly">Stroke
+            Filled Poly</label>
+    </div>
+    <div>
+        <input type="button" value="moveTop" id="order-top">
+        <input type="button" value="moveup" id="order-up">
+        <input type="button" value="modeDown" id="order-down">
+        <input type="button" value="moveBottom" id="order-bottom">
+        <input type="button" value="Delete" id="delete">
+        <input type="button" value="duplicate" id="duplicate">
+    </div>
+    <canvas id="myCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
+
+    <canvas id="palette" width="200" height="600" palette
+        style="position: absolute; z-index: 0; border: 1px solid black"></canvas>
+    <canvas id="paletteOverlay" width="200" height=600
+        style="position: absolute; z-index: 1; pointer-events: none; "></canvas>
+    <canvas id="displayColors" width="100" height="600" style="position: absolute; right:0;"></canvas>
+
+    <div class="sizeContainer">
+        <div id="brushSizeIndicator">50</div>
+        <input type="range" min="1" max="100" value="50" class="slider" id="brushSize">
+    </div>
+    <div clas="colorManip">
+        <div>
+       r<input type="range" name="rslider" min="0" max="255" id="rslider" class="slider">
+       g<input type="range" name="gslider" min="0" max="255" id="gslider" class="slider">
+       b<input type="range" name="bslider" min="0" max="255" id="bslider" class="slider">
+       </div>
+       <div>
+       h<input type="range" name="hslider" min="0" max="360" id="hslider" class="slider">
+       s<input type="range" name="sslider" min="0" max="255" id="sslider" class="slider">
+       v<input type="range" name="vslider" min="0" max="255" id="vslider" class="slider">
+        </div>
+    </div>
+    <div id="datareadout">0.05135370045900345 488 276</div>
+    <div id="datareadoutcolor"></div>
+    <div id="pickedColor">O</div>
+    <p>
+        
+        <input type="button" value="Download as SVG" id="export-button">
+        <input type="button" value="Import SVG" id="import-button">
+    </p>
+    <button id="saveButton">Save</button>
+    <button id="loadButton">Load</button>
+    <input type="file" id="fileElem" multiple="" accept="image/*" style="display:none">
+    <div id="fileList">
+        <p>No files selected!</p>
+    </div>
+
+    <div>
+        <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last
+            Color</label>
+        <div id="fillshape">
+        </div>
+        <div id="compositeMode"> </div>
+    </div>
+</body>
+
+</html>
