@@ -8,13 +8,19 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 </head>
+<script>window.onresize = function () {
+        document.body.height = window.innerHeight;
+    }
+    window.onresize(); // called to initially set the height.
+</script>
 <style>
     /* Scale canvas with resize attribute to full size */
     body {
+        overflow: hidden;
         display: grid;
         height: 100vh;
         padding: 0%;
-        grid-template: auto 1fr auto / auto 1fr auto
+        grid-template: auto 1fr 100px / auto 1fr auto
     }
 
     .header {
@@ -24,6 +30,7 @@
         display: grid;
         grid-template-columns: 1fr auto;
     }
+
     /*.headerbtns {
         background: red;
     }
@@ -76,6 +83,7 @@
         border-radius: 12px;
         font-size: 20px;
     }
+
     .button-inline {
         background-color: #4e4e4e;
         /* Green */
@@ -92,7 +100,7 @@
     .button:hover {
         color: rgb(247, 140, 140);
     }
-    
+
 
     label.btn {
         padding: 1px 1px;
@@ -121,26 +129,41 @@
         height: 8px;
         display: block;
     }
+
     .datareadout {
         background-color: rgb(174, 174, 211);
         font-size: 8pt;
-        display:inline
-        
+        display: inline
     }
+
     .colorslider {
         display: block;
     }
+    .selectedColor {
+        outline-width: 2px;
+        outline-color: black;;
+    }
+    .drawingCanvas {
+        border: "1px solid black";
+    }
 </style>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, -webkit-user-drag=no" />
 
 <body>
     <div class="header">
         <div class="headerbtns">
-            <input type="button" class="button-inline material-icons" value="file_upload" old_value="moveTop" id="order-top">
-            <input type="button" class="button-inline material-icons" value="keyboard_arrow_up" old_value="moveup" id="order-up">
-            <input type="button" class="button-inline material-icons" value="keyboard_arrow_down" old_value="modeDown" id="order-down">
-            <input type="button" class="button-inline material-icons" value="file_download" old_value="moveBottom" id="order-bottom">
-            <input type="button" class="button-inline material-icons" value="delete_outline" old_value="Delete" id="delete">
-            <input type="button" class="button-inline material-icons" value="control_point_duplicate" old_value="duplicate" id="duplicate">
+            <input type="button" class="button-inline material-icons" value="file_upload" old_value="moveTop"
+                id="order-top">
+            <input type="button" class="button-inline material-icons" value="keyboard_arrow_up" old_value="moveup"
+                id="order-up">
+            <input type="button" class="button-inline material-icons" value="keyboard_arrow_down" old_value="modeDown"
+                id="order-down">
+            <input type="button" class="button-inline material-icons" value="file_download" old_value="moveBottom"
+                id="order-bottom">
+            <input type="button" class="button-inline material-icons" value="delete_outline" old_value="Delete"
+                id="delete">
+            <input type="button" class="button-inline material-icons" value="control_point_duplicate"
+                old_value="duplicate" id="duplicate">
             <input type="button" class="button-inline material-icons" value="photo" id="saveButton">
             <input type="button" class="button-inline material-icons" value="upload_file" id="loadButton">
             <input type="button" class="button-inline material-icons" value="download_for_offline" id="export-button">
@@ -170,30 +193,32 @@
                 class="material-icons">navigation</span></label>
 
     </div>
-    <main contenteditable></main>
+    <main>
+        <canvas id="myCanvas" class="drawingCanvas" width="600" height="600" resize data-paper-hidpi="off"></canvas>
+    </main>
     <div class="right-sidebar">
-        Right Sidebar
+        <canvas id="displayColors" class="selectedColor" width="100%" height="50px" ></canvas>
         <div clas="colorManip">
             <div>
-           r<input type="range" class="colorslider" name="rslider" min="0" max="255" id="rslider" class="slider">
-           g<input type="range" class="colorslider" name="gslider" min="0" max="255" id="gslider" class="slider">
-           b<input type="range" class="colorslider" name="bslider" min="0" max="255" id="bslider" class="slider">
-           </div>
-           <div>
-           h<input type="range" class="colorslider" name="hslider" min="0" max="360" id="hslider" class="slider">
-           s<input type="range" class="colorslider" name="sslider" min="0" max="255" id="sslider" class="slider">
-           v<input type="range" class="colorslider" name="vslider" min="0" max="255" id="vslider" class="slider">
+                r<input type="range" class="colorslider" name="rslider" min="0" max="255" id="rslider" class="slider">
+                g<input type="range" class="colorslider" name="gslider" min="0" max="255" id="gslider" class="slider">
+                b<input type="range" class="colorslider" name="bslider" min="0" max="255" id="bslider" class="slider">
+            </div>
+            <div>
+                h<input type="range" class="colorslider" name="hslider" min="0" max="360" id="hslider" class="slider">
+                s<input type="range" class="colorslider" name="sslider" min="0" max="255" id="sslider" class="slider">
+                v<input type="range" class="colorslider" name="vslider" min="0" max="255" id="vslider" class="slider">
             </div>
         </div>
     </div>
     <footer>
         <input type="checkbox" name="adjustLastColor" id="adjustLastColor"><label for="adjustLastColor">Adjust Last
             Color</label>
-           ArtMachine
-           <div class="datareadout" id="datareadout">data</div>
-           <div class="datareadout" id="datareadoutcolor">data</div>
-           <div class="datareadout" id="pickedColor">data</div>
-        </footer>
+        ArtMachine
+        <div class="datareadout" id="datareadout">data</div>
+        <div class="datareadout" id="datareadoutcolor">data</div>
+        <div class="datareadout" id="pickedColor">data</div>
+    </footer>
     </div>
 </body>
 
