@@ -126,6 +126,7 @@ function getColorComponents(colorString) {
     return colorString.replace("rgb(","").replace(")","").split(",");
 }
 function updateColorSliders() {
+    updateRangeColorSliders();
     colors = getColorComponents(fillColor)
     ColorSliders.r.value = colors[0];
     ColorSliders.g.value = colors[1];

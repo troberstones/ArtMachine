@@ -31,6 +31,9 @@
         display: grid;
         height: 100vh;
         padding: 0%;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
         grid-template: auto 1fr 100px / auto 1fr auto
     }
 
@@ -219,9 +222,18 @@
         width: 100%;
         height: 100%;
     }
-
+    canvas {
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        -webkit-user-drag: none;
+        -webkit-user-drag: none;
+    }
     .rangeslider {
-        background-color: red;
+        border-top: 5px;
+        background-color: rgb(65, 65, 65);
         width: 100%;
         height: 20;
     }
@@ -230,8 +242,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="msapplication-tap-highlight" content="no">
-
-<body class="fullsreen">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="red">
+<meta name="format-detection" content="telephone=no">
+<body class="fullscreen">
     <div class="header">
         <div class="headerbtns">
             <input type="button" class="button-inline material-icons" value="file_upload" old_value="moveTop"
@@ -276,11 +290,10 @@
 
     </div>
     <main class="round-corner">
-        <canvas id="myCanvas" class="drawingCanvas softest-shadow" width="600" height="600" resize
+        <canvas id="myCanvas" resize="true" class="drawingCanvas article softest-shadow" width="600" height="600" resize
             data-paper-hidpi="off"></canvas>
         <input type="file" id="fileElem" multiple="" accept="image/*" style="display:none">
         <div id="fileList">
-            <p>No files selected!</p>
         </div>
     </main>
     <div class="right-sidebar">
@@ -291,8 +304,13 @@
         </div>
         <div class="colorManip">
             <div>
-                <div class="rangeslider"></div>
-                <div class="rangeslider"></div>
+                <div class="divider"></div>
+                <div class="rangeslider" data-slidervalue=".75" data-mode="Rgb"></div>
+                <div class="rangeslider" data-slidervalue=".5" data-mode="rGb"></div>
+                <div class="rangeslider" data-slidervalue=".5" data-mode="rgB"></div>
+                <div class="rangeslider" data-slidervalue=".75" data-mode="Hsv"></div>
+                <div class="rangeslider" data-slidervalue=".5" data-mode="hSv"></div>
+                <div class="rangeslider" data-slidervalue=".5" data-mode="hsV"></div>
                 r<input type="range" class="colorslider" name="rslider" min="0" max="255" id="rslider" class="slider">
                 g<input type="range" class="colorslider" name="gslider" min="0" max="255" id="gslider" class="slider">
                 b<input type="range" class="colorslider" name="bslider" min="0" max="255" id="bslider" class="slider">
