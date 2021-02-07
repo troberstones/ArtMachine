@@ -2,6 +2,7 @@ window.onload = function () {
     uiInit();
     canvasInit();
     paletteInit();
+    init_range_sliders();
 }
 var canvas;
 
