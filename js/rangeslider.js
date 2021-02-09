@@ -6,13 +6,13 @@ function init_range_sliders() {
         let canv = document.createElement("canvas");
         RangeColorSliders.push(canv);
         canv.width = 200;
-        canv.height = 20;
-        canv.addEventListener("click", rangeSliderEvent);
+        canv.height = 30;
+        //canv.addEventListener("click", rangeSliderEvent);
         canv.addEventListener("pointermove", rangeSliderEvent);
         canv.addEventListener("pointerup", rangeSliderEvent);
         canv.addEventListener("pointerdown", rangeSliderEvent);
         canv.addEventListener("touchstart", rangeSliderEvent);
-        canv.addEventListener("mousedown", rangeSliderEvent);
+        //canv.addEventListener("mousedown", rangeSliderEvent);
         element.appendChild(canv);
 
         canv.SliderValue = element.dataset.slidervalue;
@@ -57,7 +57,8 @@ function init_range_sliders() {
             let ctx2d = THIS.getContext("2d");
             ctx2d.fillStyle = "rgb(40,40,40)";
             ctx2d.fillRect(0, 0, THIS.width, THIS.height);
-            ctx2d.fillStyle = "rgb(" + (THIS.SliderValue * 255) + ",255,255)";
+            //ctx2d.fillStyle = "rgb(" + (THIS.SliderValue * 255) + ",255,255)";
+            ctx2d.fillStyle = getSliderFillColor(canv.ColorMode,canv.SliderValue);
             ctx2d.fillRect(0, 0, THIS.SliderValue * THIS.width, THIS.height);
         };
         canv.SetFromColor = (color) => {
@@ -92,6 +93,7 @@ function init_range_sliders() {
 
         canv.update();
     });
+    updateRangeColorSliders();
 }
 
 function updateRangeColorSliders() {
@@ -100,6 +102,24 @@ function updateRangeColorSliders() {
         element.SetFromColor(colors);
         element.update();
     });
+
+}
+function getSliderFillColor(modeStr,value) {
+    colors = getColorComponents(fillColor);
+    switch (modeStr) {
+        case "Rgb":
+            colors[0] = 255 * value;
+            break;
+            case "rGb":
+                colors[1] = 255 * value;
+                break; 
+            case "rGb":
+                colors[2] = 255 * value;
+                break; 
+        default:
+            break;
+    }
+    return result = "rgb("+colors[0]+","+colors[1]+","+colors[2]+")";
 
 }
 

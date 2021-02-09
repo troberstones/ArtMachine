@@ -1,6 +1,6 @@
 
-var fillColor;
-var oldFillColor;
+var fillColor = "rgb(256,128,64)";
+var oldFillColor = "rgb(32,85,128)";
 var itLooksGood;
 function paletteInit() {
     console.log("this is a test!");
