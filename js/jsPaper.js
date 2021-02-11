@@ -15,7 +15,22 @@ function canvasInit() {
     canvas = document.getElementById('myCanvas');
     // Create an empty project and a view for the canvas:
     paper.setup(canvas);
+    let savedDrawing = localStorage.getItem("drawing");
+    if(savedDrawing) {
+        paper.project.clear();
+        paper.project.importJSON(savedDrawing);
+    }
+    let canvasParent = canvas.parentElement;
+    canvas.width = canvasParent.offsetWidth;
+    canvas.height = canvasParent.offsetHeight;
 
+    window.addEventListener("resize", (event)=>{
+        canvas.width = canvasParent.offsetWidth;
+        canvas.height = canvasParent.offsetHeight; 
+    });
+    window.addEventListener("beforeunload",(event)=>{
+        localStorage.setItem("drawing",paper.project.exportJSON({ asString: true }));
+    });
     if (window.PointerEvent) {
         canvas.addEventListener("pointermove", pointermove);
         canvas.addEventListener("pointerdown", touchdown);
