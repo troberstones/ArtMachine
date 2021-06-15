@@ -102,13 +102,6 @@ function setupButtons() {
     ColorSliders.s = getSlider("sslider");
     ColorSliders.v = getSlider("vslider");
 
-    //ColorSliders.r.addEventListener("change", function () { colorSlider("r", this.value) });
-    //ColorSliders.g.addEventListener("change", function () { colorSlider("g", this.value) });
-    //ColorSliders.b.addEventListener("change", function () { colorSlider("b", this.value) });
-    //ColorSliders.h.addEventListener("change", function () { colorSlider("h", this.value) });
-    //ColorSliders.s.addEventListener("change", function () { colorSlider("s", this.value) });
-    //ColorSliders.v.addEventListener("change", function () { colorSlider("v", this.value) });
-
     ColorSliders.r.addEventListener("input", function () { colorSlider("r", this.value) });
     ColorSliders.g.addEventListener("input", function () { colorSlider("g", this.value) });
     ColorSliders.b.addEventListener("input", function () { colorSlider("b", this.value) });

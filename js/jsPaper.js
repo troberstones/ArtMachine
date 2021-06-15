@@ -16,7 +16,7 @@ function canvasInit() {
     // Create an empty project and a view for the canvas:
     paper.setup(canvas);
     let savedDrawing = localStorage.getItem("drawing");
-    if(savedDrawing) {
+    if (savedDrawing) {
         paper.project.clear();
         paper.project.importJSON(savedDrawing);
     }
@@ -24,12 +24,17 @@ function canvasInit() {
     canvas.width = canvasParent.offsetWidth;
     canvas.height = canvasParent.offsetHeight;
 
-    window.addEventListener("resize", (event)=>{
+    window.addEventListener("resize", (event) => {
         canvas.width = canvasParent.offsetWidth;
-        canvas.height = canvasParent.offsetHeight; 
+        canvas.height = canvasParent.offsetHeight;
     });
-    window.addEventListener("beforeunload",(event)=>{
-        localStorage.setItem("drawing",paper.project.exportJSON({ asString: true }));
+    window.addEventListener("beforeunload", (event) => {
+        localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
+    });
+    window.addEventListener("visibilitychange", function (e) {
+        if (document.visibilityState == 'hidden') {
+            localStorage.setItem("drawing", paper.project.exportJSON({ asString: true }));
+        }
     });
     if (window.PointerEvent) {
         canvas.addEventListener("pointermove", pointermove);
@@ -127,7 +132,7 @@ function pointermove(event) {
             printMessage("Buttons:" + event.buttons);
             if (activeItem && event.buttons != 0) {
                 var pos = getCursorPosition(event);
-                activeItem.position = new paper.Point(pos.x, pos.y);
+                activeItem.position = new paper.Point(pos.x-hitDelta.x, pos.y-hitDelta.y);
                 //paper.view.draw();
             }
             break;
@@ -187,14 +192,19 @@ function deselect() {
         activeItem = null;
     }
 }
+var hitDelta = null;
 function selectItem(event, someBool) {
     var pos = getCursorPosition(event);
     let hitPos = new paper.Point(pos.x, pos.y)
+
     hitItem = paper.project.hitTest(hitPos, hitOptions);
     deselect();
     if (hitItem) {
         console.log("Selected item!");
         activeItem = hitItem.item;
+        hitDelta = hitPos;
+        hitDelta.x -= activeItem.position._x;
+        hitDelta.y -= activeItem.position._y;
         activeItem.selected = true;
     }
 }
